@@ -35,5 +35,18 @@ services:
     ports:
       - "8080:8080"
 
+  ui:
+    build:
+      context: ./Lus.UI
+      dockerfile: Dockerfile
+      args:
+        BUILD_CONFIGURATION: ${UI_BUILD_CONFIGURATION:-development}
+    image: lus-ui:local
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "4200:80"
+
 volumes:
   db_data:

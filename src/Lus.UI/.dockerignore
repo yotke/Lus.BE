@@ -1,0 +1,16 @@
+.git
+.github
+.vs
+.idea
+.angular
+node_modules
+dist
+dist.zip
+**/*.user
+**/.DS_Store
+Dockerfile
+.dockerignore
+README.md
+e2e
+test-results
+playwright-report
