@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Lus.Authorization.Authentication;
 
 namespace Lus.Infrastructure.IdentityServer.Permissions
 {
@@ -10,7 +10,7 @@ namespace Lus.Infrastructure.IdentityServer.Permissions
         public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
         {
             return Task.FromResult(
-                new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                new AuthorizationPolicyBuilder(CookieAuthSchemes.Api)
                     .RequireAuthenticatedUser().Build());
         }
 
@@ -23,7 +23,7 @@ namespace Lus.Infrastructure.IdentityServer.Permissions
         {
             if (policyName.StartsWith(POLICY_PREFIX, StringComparison.OrdinalIgnoreCase))
             {
-                var policy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme);
+                var policy = new AuthorizationPolicyBuilder(CookieAuthSchemes.Api);
                 policy.AddRequirements(new PermissionRequirement(policyName.Substring(POLICY_PREFIX.Length)));
                 return Task.FromResult((AuthorizationPolicy?)policy.Build());
             }

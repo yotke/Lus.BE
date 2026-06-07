@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using IdentityServer4.Models;
+using IdentityModel;
 using MediatR;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
@@ -80,7 +80,7 @@ namespace Lus.Application.Users.Commands.CreateUser
                     ApplicationConstants.Scopes.PublicApiScope,
                     ApplicationConstants.Scopes.InternalApi
                 };
-            user.ClientSecrets = new List<string> { createCommand.Password.Sha256() };
+            user.ClientSecrets = new List<string> { createCommand.Password.ToSha256() };
             user.AllowedGrantTypes = new List<string> { ApplicationConstants.AllowedGrandTypes.Password };
             var claims = new List<KeyValuePair<string, string>>
             {

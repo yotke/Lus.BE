@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using IdentityServer4.Models;
 using Lus.Application.Users.Commands.AddRoleToUser;
 using Lus.Application.Users.Commands.CreateUser;
 using Lus.Application.Users.Commands.ModifyRoleToUser;
@@ -24,15 +23,6 @@ namespace Lus.Application.Users
 
             CreateMap<User, UserFullInfoDto>();
 
-            CreateMap<User, Client>(MemberList.None)
-                .ForMember(m => m.ClientId, opt => opt.MapFrom(s => s.UserName.ToLower()))
-                .ForMember(m => m.ClientSecrets, opt => opt.MapFrom(s => s.ClientSecrets.Select(cs => new Secret(cs, null))))
-                .ForMember(m => m.AllowedGrantTypes, opt => opt.MapFrom(s => s.AllowedGrantTypes))
-                .ForMember(m => m.AllowedScopes, opt => opt.MapFrom(s => s.AllowedScopes))
-                .ForMember(m => m.Claims, opt => opt.MapFrom(s => s.Claims.Select(c => new ClientClaim(c.Key, c.Value))))
-                .ForMember(d => d.ClientClaimsPrefix, opt => opt.MapFrom(s => string.Empty))
-                .ForMember(d => d.AllowAccessTokensViaBrowser, opt => opt.MapFrom(s => true))
-                .ForMember(d => d.AllowOfflineAccess, opt => opt.MapFrom(s => true));
 
             CreateMap<UpdateUserInfoDto, UpdateUserInfoCommand>();
             CreateMap<SearchUserQueryDto, GetUsersInfoQuery>();

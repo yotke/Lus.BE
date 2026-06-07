@@ -1,0 +1,58 @@
+# ───────────────────────────────────────────────────────────────
+# Lus.BE — backend-only repository .gitignore
+# The Angular UI lives in its own repo and must NOT be pushed here.
+# ───────────────────────────────────────────────────────────────
+
+# Frontend project (excluded from the backend repository)
+Lus.UI/
+
+# Build output
+**/bin/
+**/obj/
+**/publish/
+**/out/
+
+# Published / packaging artifacts
+*.nupkg
+*.snupkg
+Lus.Api/publish/
+Lus.Api/App/
+
+# Legacy Squirrel / ClickOnce package folders (no longer used)
+Lus.Api/DeltaCompressionDotNet.*/
+Lus.Api/Mono.Cecil.*/
+Lus.Api/SharpCompress.*/
+Lus.Api/squirrel.windows.*/
+packages/
+
+# IDE / editor
+.vs/
+.vscode/
+.idea/
+.claude/
+*.user
+*.suo
+*.userprefs
+*.DotSettings.user
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs (Serilog sinks write here at runtime)
+**/Serilogs/*.log
+**/*.log
+
+# Local secrets / environment overrides (keep templates, ignore local copies)
+.env
+.env.*
+**/appsettings.*.local.json
+**/appsettings.Local.json
+
+# Test results
+**/TestResults/
+
+# Rider / VS temporary files
+**/*.TMP
+*~
+
