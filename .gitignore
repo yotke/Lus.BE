@@ -19,6 +19,8 @@ bld/
 [Pp]ublish/
 [Ll]og/
 [Ll]ogs/
+**/Serilogs/*.log
+*.log
 
 # Visual Studio
 .vs/
