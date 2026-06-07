@@ -30,7 +30,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Lus.Application\Lus.Application.csproj" />
 		<ProjectReference Include="..\Lus.Authorization\Lus.Authorization.csproj" />
-		<ProjectReference Include="..\Lus.FilterEngine\Lus.FilterEngine.csproj" />
+		<ProjectReference Include="..\tools\Lus.FilterEngine\Lus.FilterEngine.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
