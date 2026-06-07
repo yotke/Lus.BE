@@ -38,6 +38,7 @@
         <ProjectReference Include="..\Lus.Authorization\Lus.Authorization.csproj" />
         <ProjectReference Include="..\Lus.Contracts\Lus.Contracts.csproj" />
         <ProjectReference Include="..\Lus.NotificationCenter\Lus.NotificationCenter.csproj" />
+        <ProjectReference Include="..\Lus.FilterEngine\Lus.FilterEngine.csproj" />
     </ItemGroup>
 
     <!-- Windows-only legacy reference (unused in code). Excluded on Linux/Docker builds. -->

@@ -85,6 +85,7 @@
         <ProjectReference Include="..\Lus.Contracts\Lus.Contracts.csproj" />
         <ProjectReference Include="..\Lus.Infrastructure\Lus.Infrastructure.csproj" />
         <ProjectReference Include="..\Lus.NotificationCenter\Lus.NotificationCenter.csproj" />
+        <ProjectReference Include="..\Lus.FilterEngine\Lus.FilterEngine.csproj" />
     </ItemGroup>
 
     <ItemGroup>
