@@ -99,6 +99,7 @@
             public const string ApplicationOptions = "ApplicationOptions";
             public const string SmsNotificationOptions = "SmsNotificationOptions";
             public const string MailNotificationOptions = "MailNotificationOptions";
+            public const string GoogleAuthOptions = "Authentication:Google";
         }
 
         public static class NotificationConstants

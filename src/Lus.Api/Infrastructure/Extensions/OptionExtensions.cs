@@ -23,7 +23,8 @@ namespace Lus.Infrastructure.Extensions
                 .Configure<MailNotificationOptions>(configuration.GetSection(ApplicationConstants.OptionSections.MailNotificationOptions))
                 .Configure<ApplicationOptions>(configuration.GetSection(ApplicationConstants.OptionSections.ApplicationOptions))
                 .Configure<SmsNotificationOptions>(configuration.GetSection(ApplicationConstants.OptionSections.SmsNotificationOptions))
-                .Configure<RecaptchaConfigOptions>(configuration.GetSection(ApplicationConstants.OptionSections.RecaptchaConfigOptions));
+                .Configure<RecaptchaConfigOptions>(configuration.GetSection(ApplicationConstants.OptionSections.RecaptchaConfigOptions))
+                .Configure<GoogleAuthOptions>(configuration.GetSection(ApplicationConstants.OptionSections.GoogleAuthOptions));
             return services;
         }
     }

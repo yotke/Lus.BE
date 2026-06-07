@@ -225,8 +225,11 @@ namespace Lus
                 _ => SameSiteMode.Lax
             };
 
-        protected virtual void Seed(IApplicationBuilder applicationBuilder) =>
+        protected virtual void Seed(IApplicationBuilder applicationBuilder)
+        {
             applicationBuilder.SeedClients(Configuration);
+            applicationBuilder.SeedIdentity(Configuration);
+        }
 
         protected virtual void CreateJobs(IApplicationBuilder applicationBuilder) =>
             applicationBuilder.CreateJobs(Configuration);

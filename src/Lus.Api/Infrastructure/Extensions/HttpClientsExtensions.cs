@@ -1,4 +1,5 @@
 ﻿using Lus.Application.Common.Ports;
+using Lus.Infrastructure.Adapters.Google;
 using Lus.Infrastructure.Adapters.Recaptcha;
 using Lus.Infrastructure.Adapters.SystemWS;
 
@@ -13,6 +14,9 @@ namespace Lus.Infrastructure.Extensions
 
             var systemWSUrl = new Uri(configuration.GetValue<string>("SystemWSSetting:SystemUsersProviderUrl"));
             services.AddCustomHttpClient<ISystemWSAdapter, SystemWSAdapter>("SystemWSAdapter", "SystemWSAdapter", systemWSUrl);
+
+            var googleTokenInfoUrl = new Uri(configuration.GetValue<string>("Authentication:Google:TokenInfoUrl") ?? "https://oauth2.googleapis.com/");
+            services.AddCustomHttpClient<IGoogleSignInAdapter, GoogleSignInAdapter>("GoogleSignInAdapter", "GoogleSignInAdapter", googleTokenInfoUrl);
 
             return services;
         }

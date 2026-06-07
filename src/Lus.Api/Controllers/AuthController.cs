@@ -4,9 +4,12 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Lus.Application;
+using Lus.Application.Common.Exceptions;
 using Lus.Application.Common.Ports;
 using Lus.Application.Common.Services;
 using Lus.Application.Users.Commands.ConfirmUser;
+using Lus.Application.Users.Commands.CreateUser;
+using Lus.Application.Users.Commands.GoogleSignIn;
 using Lus.Application.Users.Commands.LoginUserByToken;
 using Lus.Application.Users.Queries.GetAuthUserInfo;
 using Lus.Authorization.Authentication;
@@ -26,19 +29,22 @@ namespace Lus.Controllers
         private readonly IEasyCachingProvider cacheProvider;
         private readonly IUsersService usersService;
         private readonly IRecaptchaAdapter recaptchaAdapter;
+        private readonly IGoogleSignInAdapter googleSignInAdapter;
 
         public AuthController(
             IMediator mediator,
             ICookieAuthSessionService cookieAuthSessionService,
             IEasyCachingProvider cacheProvider,
             IUsersService usersService,
-            IRecaptchaAdapter recaptchaAdapter)
+            IRecaptchaAdapter recaptchaAdapter,
+            IGoogleSignInAdapter googleSignInAdapter)
         {
             this.mediator = mediator;
             this.cookieAuthSessionService = cookieAuthSessionService;
             this.cacheProvider = cacheProvider;
             this.usersService = usersService;
             this.recaptchaAdapter = recaptchaAdapter;
+            this.googleSignInAdapter = googleSignInAdapter;
         }
 
         /// <summary>
@@ -73,9 +79,80 @@ namespace Lus.Controllers
         }
 
         /// <summary>
-        /// Confirms a user via the e-mail confirmation token and signs them in.
-        /// Replaces the IdentityServer4 "confirm_token" extension grant.
+        /// Public self-service registration. Creates an unconfirmed user and sends the
+        /// confirmation e-mail; the user can sign in once they confirm. Recaptcha is
+        /// verified inside the create-user pipeline.
         /// </summary>
+        [HttpPost("register")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RegisterResponseDto))]
+        public async Task<IActionResult> Register(RegisterRequestDto request, CancellationToken cancellationToken)
+        {
+            if (request == null ||
+                string.IsNullOrWhiteSpace(request.Email) ||
+                string.IsNullOrWhiteSpace(request.Password))
+            {
+                return Ok(RegisterResponseDto.Failure(10));
+            }
+
+            if (!string.IsNullOrEmpty(request.ConfirmPassword) &&
+                !string.Equals(request.Password, request.ConfirmPassword, StringComparison.Ordinal))
+            {
+                return Ok(RegisterResponseDto.Failure(10, "Passwords do not match"));
+            }
+
+            try
+            {
+                await this.mediator.Send(new CreateUserCommand
+                {
+                    Email = request.Email.ToLowerInvariant(),
+                    Password = request.Password,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    Phone = request.Phone,
+                    IdNumber = request.IdNumber
+                }, cancellationToken);
+
+                return Ok(RegisterResponseDto.Success());
+            }
+            catch (CommonApplicationException ex)
+            {
+                // 17 = e-mail already registered, 41 = recaptcha failed (preserved for the UI).
+                return Ok(RegisterResponseDto.Failure(ex.ExceptionId == 0 ? 10 : ex.ExceptionId, ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Google Sign-In. Verifies the Google ID token, finds-or-creates the matching
+        /// local user and issues the auth cookie. The user is created confirmed because
+        /// Google has already verified the e-mail address.
+        /// </summary>
+        [HttpPost("google")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponseDto))]
+        public async Task<IActionResult> Google(GoogleLoginRequestDto request, CancellationToken cancellationToken)
+        {
+            if (request == null || string.IsNullOrWhiteSpace(request.IdToken))
+            {
+                return Ok(LoginResponseDto.Failure(10));
+            }
+
+            try
+            {
+                var googleUser = await this.googleSignInAdapter.VerifyIdTokenAsync(request.IdToken, cancellationToken);
+
+                var email = await this.mediator.Send(new GoogleSignInCommand(
+                    googleUser.Email,
+                    googleUser.FirstName,
+                    googleUser.LastName), cancellationToken);
+
+                return Ok(await SignInByEmailAsync(email, cancellationToken));
+            }
+            catch (CommonApplicationException ex)
+            {
+                return Ok(LoginResponseDto.Failure(ex.ExceptionId == 0 ? 10 : ex.ExceptionId));
+            }
+        }
         [HttpPost("confirm-token")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponseDto))]
