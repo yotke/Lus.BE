@@ -59,7 +59,7 @@ namespace Lus.Infrastructure.Extensions
                 && !string.IsNullOrWhiteSpace(user)
                 && password != null)
             {
-                return $"Server={host};Port={port};Database={database};User={user};Password={password};";
+                return $"Server={host};Port={port};Database={database};User={user};Password={password};SslMode=None;AllowPublicKeyRetrieval=true;";
             }
 
             var fallback = configuration.GetConnectionString("DefaultConnection");
@@ -81,7 +81,7 @@ namespace Lus.Infrastructure.Extensions
             var database = uri.AbsolutePath.TrimStart('/');
             var port = uri.Port > 0 ? uri.Port : 3306;
 
-            return $"Server={uri.Host};Port={port};Database={database};User={user};Password={password};";
+            return $"Server={uri.Host};Port={port};Database={database};User={user};Password={password};SslMode=None;AllowPublicKeyRetrieval=true;";
         }
 
         private static string FirstConfiguredValue(IConfiguration configuration, params string[] keys)
