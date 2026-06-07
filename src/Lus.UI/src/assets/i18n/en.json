@@ -1,0 +1,23 @@
+{
+    "app": {
+        "title": "Lus - מוני ג'ובס",
+        "subTitle": "The municipal section of Israel is calling you",
+        "welcome": "Welcome to Lus, the first platform in Israel where you can view local government tenders, apply and keep up to date with everything that is happening in the municipal sector.",
+        "ChangeLangTitle": "Select language",
+        "nav": {
+            "Home": "Home",
+            "About": "About",
+            "Contact": "Contact us",
+            "Signin": "Signin"
+        }
+    },
+    "Sitetitle": "Angular Multi Language Site",
+    "Name": "Name",
+    "NameError": "I am sure you must have a name!",
+    "Email": "Email address",
+    "PhoneNo": "Phone No",
+    "Password": "Password",
+    "Bio": "Enter bio",
+    "TermsConditions": "I agree to terms and conditions.",
+    "Submit": "Submit"
+}

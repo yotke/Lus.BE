@@ -1,0 +1,6 @@
+<div *ngIf="control" class="checkbox-mat-form-field">
+    <mat-checkbox [title]="title" [formControl]="control" (change)="emitValueChange($event.checked)">{{ placeholder }}</mat-checkbox>
+</div>
+<div *ngIf="!control" class="checkbox-mat-form-field">
+    <mat-checkbox [title]="title" [(ngModel)]="selectedValue" (change)="emitValueChange($event.checked)">{{ placeholder }}</mat-checkbox>
+</div>

@@ -1,0 +1,7 @@
+.ng-select{
+    direction: rtl;
+    padding: 0;
+    ::ng-deep .ng-input{
+        padding: 1rem !important;
+    }
+}

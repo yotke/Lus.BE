@@ -1,0 +1,56 @@
+.breadcrumb {
+    background: none;
+    font-size: 0.9vw;
+    margin: 0;
+    padding-top: 1vh;
+    padding-right: 2vw;
+    padding-left: 2vw;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.breadcrumb-icon {
+    display: flex;
+    justify-content: center;
+    align-self: flex-end;
+}
+
+a,
+span {
+    color: #a68eb7;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+a:hover,
+span:hover {
+    color: #04c838;
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+    margin: 5px;
+    color: #a68eb7;
+}
+
+.breadcrumb-title {
+    text-decoration: none;
+}
+
+li:last-child {}
+
+li:first-child {
+    font-size: 3vw;
+}
+
+li:not(:first-child):after {
+    content: ">";
+}
+
+li:last-child::after {
+    content: "";
+}

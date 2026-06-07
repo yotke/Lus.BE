@@ -1,0 +1,25 @@
+<ng-template [ngIf]="hasCollision||hasCollisionTot">
+    <section class="project-validator" [ngClass]="{'is-exel-step':isExelStep}">
+        <h4 *ngIf="!isExelStep">יש התנגשות ביום זה:</h4>
+        <h4 *ngIf="isExelStep">שים לב כי יש התנגשות בין תאריכים:</h4>
+        <section class="times-container">
+            <div class="time-project-container" *ngFor="let projectName of keys(groupedTimesByProject);">
+                <h5>{{ projectName }} :</h5> <!-- Project Name Heading -->
+
+                <!-- Iterating through each Work Date for a given project -->
+                <ng-container *ngFor="let workDate of keys(groupedTimesByProject[projectName])">
+                    <h6>{{ changeDate(workDate) }}</h6> <!-- Work Date Heading -->
+
+                    <div class="time-container"
+                        *ngFor="let dateTimeGroup of groupedTimesByProject[projectName][workDate];let i = index; let isLast = last;">
+                        <div>{{dateTimeGroup.StartTime}}</div>
+                        <div> - </div>
+                        <div>{{dateTimeGroup.EndTime}}</div>
+                        <div *ngIf="!isLast">,</div>
+                        <br>
+                    </div>
+                </ng-container>
+            </div>
+        </section>
+    </section>
+</ng-template>

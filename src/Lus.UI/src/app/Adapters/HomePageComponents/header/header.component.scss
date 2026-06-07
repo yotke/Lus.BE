@@ -1,0 +1,86 @@
+.home-nav-bar{
+    border-radius: 0.5rem;
+    background-color: #131318;
+    border-image-source: linear-gradient(to right, #68d6fd, #00ff87) !important;
+    // padding:0.3rem;
+    img{
+        // margin: 0.5vw;
+        width: 8rem;
+        margin-left: 2rem;
+        // height: 5rem;
+    }
+
+.system-date{
+    background: #009097;
+    border-radius: 0.5rem;
+
+}
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    direction: rtl;
+    ul{
+        list-style-type: none;
+        list-style:none;
+        display: flex;
+        flex-direction: row;
+    
+        >*{
+          
+          margin-left: 1rem;  
+        }
+        li{
+            color: white;
+            margin-top: 0.5rem;
+            width: 10vw;
+            // margin-bottom: 1rem;
+            // min-height: 3vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-decoration: none;
+          
+            a{
+                font-size: 1.2rem;
+                text-decoration: none;
+                color: white;
+            }
+            &::after{
+                content: "";
+                height: 0.3rem;
+                margin-top: 0.5rem;
+            }
+            &:hover{
+                &::after{
+                    margin-top: 0.5rem;
+                    content: "";
+                    height: 0.3rem;
+                    width: 100%;
+                    background-image: linear-gradient(to right, #68d6fd, #00ff87);
+                }
+            }
+        }
+    }
+}
+.white-header{
+
+    .home-nav-bar{
+        width: 100%;
+        z-index: 100;
+        position: fixed;
+        top: 0;
+        border-radius: 0.5rem;
+        background-color: white;
+        color:#131318;
+        border-bottom: 0.1rem solid; /* This sets the width of the border */
+        border-image-source: linear-gradient(to right, #68d6fd, #00ff87) !important;
+        border-image-slice: 1; /* Defines where to slice the gradient image for each side */
+        border-image-width: 1; /* Sets the width of the border */
+        ul,li,a{
+            color: #131318 !important;
+        }
+        
+    }
+}

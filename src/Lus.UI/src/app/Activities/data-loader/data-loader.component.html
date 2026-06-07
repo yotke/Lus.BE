@@ -1,0 +1,75 @@
+<div class="loader-data-container">
+    <form [formGroup]="ProjectTimeForm" (ngSubmit)="onFormSubmit()">
+        <div class="input-container" dir="rtl">
+            <app-main-headline [title]="'ניהול זמנים'"></app-main-headline>
+            <div class="row">
+                <div class="col-md-6">
+                    <app-auto-complete [formGroup]="ProjectTimeForm" [listInput]="ProjectList" [title]="'בחר פרויקט'"
+                        [formControlName]="'projectName'" [(selectedValue)]="CurrProjectName"
+                        [placeholder]="'שם פרויקט'"></app-auto-complete>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <app-auto-complete [formGroup]="ProjectTimeForm" [placeholder]="'היחידה המעסיקה'"
+                        [title]="'היחידה המעסיקה'" [formControlName]="'sectionName'"
+                        [listInput]="SectionList"></app-auto-complete>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem;" [@slideInOut] *ngIf="ProjectTimeForm.get('sectionName')?.value">
+                <div class="time-data-container"
+                    *ngFor="let dateTimeGroup of DateTimeFormArray.controls; let i = index">
+                    <div class="time-headline-container">
+                        <mat-icon (click)="RemoveDateTimeRow(i)">delete_outline</mat-icon>
+                        <h3>פרויקט - זמני עבודה</h3>
+                    </div>
+                    <div [formGroup]="GetFormGroup(dateTimeGroup)" class="date-time-group-container row col-md-12">
+                        <app-project-validator [CurrProject]="CurrProject"
+                            *ngIf="GetCurrDateTime(dateTimeGroup)&&GetTimeFormArray(dateTimeGroup)"
+                            [CurrDateRunning]="GetCurrDateTime(dateTimeGroup)"
+                            [TimeArrayForm]="GetTimeFormArray(dateTimeGroup)"></app-project-validator>
+                        <div class=" col-md-6">
+                            <app-date-picker [formGroup]="GetFormGroup(dateTimeGroup)" [formControlName]="'WorkDate'"
+                                [title]="'תאריך עבודה'" [placeholder]="'תאריך עבודה'" [min]="GetMinDateVal"
+                                [max]="GetMaxDateVal"></app-date-picker>
+                        </div>
+                        <div class="row col-md-6">
+                            <div class="row col-md-12"
+                                *ngFor="let timeGroup of GetFormArray(dateTimeGroup.get('TimeFormArray')).controls; let j = index">
+
+                                <div [formGroup]="GetFormGroup(timeGroup)" class="row col-md-12">
+                                    <div class="col-md-6">
+                                        <app-time-picker [formGroup]="GetFormGroup(timeGroup)" [title]="'שעת התחלה'"
+                                            [formControlName]="'StartTime'" [max]="GetEndTimeVal(timeGroup)"
+                                            [placeholder]="'שעת התחלה'"></app-time-picker>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <app-time-picker [formGroup]="GetFormGroup(timeGroup)" [title]="'שעת סיום'"
+                                            [min]="GetStartTimeVal(timeGroup)" [formControlName]="'EndTime'"
+                                            [placeholder]="'שעת סיום'"></app-time-picker>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <app-regular-input [formGroup]="GetFormGroup(timeGroup)"
+                                            [formControlName]="'WorkLocation'" [title]="'מקום העבודה'"
+                                            [placeholder]="'מקום העבודה'"></app-regular-input>
+                                    </div>
+                                </div>
+                            </div>
+                            <app-add-btn (buttonClicked)="addTimeRowToDateTime(i)"></app-add-btn>
+                        </div>
+
+                        <div class="row col-md-12">
+                            <h5>תיאור עבודה</h5>
+                            <app-textarea-input class="textarea-input" [formGroup]="GetFormGroup(dateTimeGroup)"
+                                [formControlName]="'WorkDescription'"
+                                [placeholder]="'תיאור עבודה'"></app-textarea-input>
+                        </div>
+                    </div>
+                </div>
+                <app-add-btn (buttonClicked)="addRowFormDateTime()"></app-add-btn>
+            </div>
+            <app-submit-btn [btnTitle]="'שמור/י זמני עבודה'"></app-submit-btn>
+        </div>
+    </form>
+</div>

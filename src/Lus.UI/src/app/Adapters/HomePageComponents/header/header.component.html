@@ -1,0 +1,28 @@
+<header *ngIf="!isScrolledDown" class="black-header">
+    <nav class="home-nav-bar">
+        <ul>
+            <li><a routerLink="/Home" routerLinkActive="active">מסך בית</a></li>
+            <li><a routerLink="./History">היסטורית נתונים</a></li>
+            <li><a routerLink="./contact">עזרה</a></li>
+        </ul>
+        <app-month-picker class="system-date" [(selectedValue)]="CurrSystemDate" [placeholder]="'תאריך עבודה נוכחי'"
+            [classes]="'system-date'"
+            (selectedValueChange)="onCurrSystemDateChange($event)"></app-month-picker>
+        <a href="https://www.google.com" target="_blank">
+            <img src="assets/timeLogoVerticalCropWithOutBackGround.png" alt="Timy-Logo - לוגו" />
+        </a>
+    </nav>
+</header>
+
+<header *ngIf="isScrolledDown" class="white-header">
+    <nav class="home-nav-bar">
+        <ul>
+            <li><a routerLink="/Home" routerLinkActive="active">מסך בית</a></li>
+            <li><a routerLink="./History">היסטורית נתונים</a></li>
+            <li><a routerLink="./contact">עזרה</a></li>
+        </ul>
+        <a href="https://www.google.com" target="_blank">
+            <img src="assets/TimeLogoToWhiteHeader.png" alt="One City - לוגו" />
+        </a>
+    </nav>
+</header>

@@ -1,0 +1,7 @@
+@import '../variables.scss';
+
+app-regular-input {
+  .mat-mdc-text-field-wrapper {
+    padding: 0 $base-size-input*1.6 !important;
+  }
+}

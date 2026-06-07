@@ -1,0 +1,129 @@
+.headline-contianer {
+    margin-bottom: 1rem;
+
+    .headeline {
+        color: white;
+        text-align: center;
+        background-color: #01A8D4;
+    }
+}
+
+.headeline {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: rgba(128, 128, 128, 0.205);
+}
+
+app-regular-headline {
+
+    :host {
+        display: block;
+        width: 100%;
+
+        &.regular .mat-toolbar {
+            width: 100%;
+        }
+    }
+
+    .mat-toolbar {
+        height: 2.7rem;
+        display: flex;
+        justify-content: center; // Center the title horizontally
+        position: relative; // Ensure the content can be positioned correctly
+        // background-image: linear-gradient(to bottom, #5CD4EC 0, #c4e3f3 100%);;
+        background-color: #80d8fa;
+
+        h1 {
+            flex-grow: 1;
+            text-align: flex-start;
+            justify-content: center;
+            // padding-right: 2rem;
+            font-size: 1.5rem;
+            font-weight: 550;
+            // letter-spacing: .1rem;
+            color: black;
+        }
+
+        button {
+            background-color: #FFFFFF !important;
+            font-weight: normal !important;
+            color: #000000 !important;
+        }
+
+        button i {
+            color: #01A8D4;
+            padding: 0.3rem;
+        }
+
+        [left-content] {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+app-main-headline {
+    :host {
+        display: block;
+        width: 100%;
+
+        &.regular .mat-toolbar {
+            width: 100%;
+        }
+    }
+
+    .mat-toolbar {
+        display: flex;
+        justify-content: center; // Center the title horizontally
+        position: relative; // Ensure the content can be positioned correctly
+        // background-image: linear-gradient(to bottom, #5CD4EC 0, #c4e3f3 100%);;
+        background-color: #00A8D4;
+
+        h1 {
+            flex-grow: 1;
+            text-align: flex-start;
+            justify-content: center;
+            padding-right: 2rem;
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: .1rem;
+        }
+
+        button {
+            background-color: #FFFFFF !important;
+            font-weight: normal !important;
+            color: #000000 !important;
+        }
+
+        button i {
+            color: #01A8D4;
+            padding: 0.3rem;
+        }
+
+        [left-content] {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+.form-headline {
+    font-size: 1.5rem;
+    color: #45BFDF;
+    margin: 1rem;
+    letter-spacing: 0.01rem;
+    font-weight: 600;
+}
+
+.line-break {
+    margin: 1rem 0;
+    width: 100%;
+    height: 1.2px;
+    background-color: #45BFDF;
+}

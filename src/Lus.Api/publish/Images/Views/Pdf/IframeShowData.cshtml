@@ -1,0 +1,15 @@
+﻿@model Lus.Application.Images.Entities.Image
+@{ 
+    string Base64String = "data:image/png;base64," + Convert.ToBase64String(Model.FileContent, 0, Model.FileContent.Length);
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+</head>
+<body>
+<div class="tenderRow" style="">
+    <img style="max-height:80%;max-width:100%;" src="@Base64String" title="@Model.Name" />
+</div>
+</body>
+</html>

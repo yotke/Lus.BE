@@ -1,0 +1,20 @@
+<div class="date-container">
+    <!-- Optional label -->
+    <mat-label *ngIf="showLabel">{{ title }}</mat-label>
+    <mat-form-field *ngIf="control" [ngClass]="combinedClasses" [title]="title" class="date-mat-form-field">
+        <mat-label *ngIf="!showLabel">{{title}}</mat-label>
+
+        <input matInput [matDatepicker]="datePicker" [formControl]="control" [min]="min" [max]="max">
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field [class]="combinedClasses + ' ' + 'date-mat-form-field'" [title]="title" *ngIf="!control">
+        <mat-label *ngIf="!showLabel">{{title}}</mat-label>
+
+        <input matInput [matDatepicker]="datePicker" [min]="min" [max]="max" [value]="innerValue"
+            (dateChange)="onDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+    </mat-form-field>
+</div>

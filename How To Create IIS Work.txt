@@ -1,0 +1,8 @@
+press : windows + R
+
+then write : appwiz.cpl
+
+
+find in left : Turn Windows freatures on or off.
+
+find : Internet information Services

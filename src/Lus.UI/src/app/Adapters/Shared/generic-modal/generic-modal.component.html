@@ -1,0 +1,10 @@
+<div class="modal-backdrop">
+
+    <div class="modal-container">
+        <app-regular-headline *ngIf="title" [title]="title">
+        </app-regular-headline>
+        <button class="close-button" (click)="closeModal()"><i class="fa-solid fa-x"></i></button>
+
+        <ng-template #dynamicComponentContainer></ng-template>
+    </div>
+</div>

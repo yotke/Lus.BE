@@ -1,0 +1,50 @@
+.edit-overlay {
+    position: absolute;
+    min-width: 15rem;
+    padding: 1rem;
+    background-color: rgb(249 249 249);
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    h1{
+        color: rgb(75, 75, 75);
+        font-weight: 700;
+    }
+    .overlay-input-container {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        label{
+            color:rgb(58, 58, 58);
+            font-size: 1rem;
+            font-weight: 600;
+            // min-width: 25rem;
+        }
+        >* {
+            margin:0 1rem;
+          
+        }
+    }
+
+    // >* {
+    //     min-width: 15rem !important;
+    // }
+
+    cursor: grab;
+
+    // .small-input-wrapper {
+    //     margin-bottom: 0.5rem;
+    // }
+
+}
+
+.edit-overlay input {
+    margin-bottom: 10px;
+}
+
+.edit-overlay button {
+    margin-right: 5px;
+}

@@ -1,0 +1,94 @@
+.time-number-input {
+  input {
+    text-align: center;
+  }
+
+  margin-right: 0.5rem;
+  max-width: 5rem;
+}
+
+
+.inputs-cotnainer {
+  >* {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+
+
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    app-checkbox-input {
+      margin-right: 1rem;
+    }
+
+    button {
+      position: relative;
+      top: 0.3rem;
+       right: 2rem;
+    }
+  }
+}
+
+
+.signature-container {
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .27), 0 0 40px rgba(0, 0, 0, .08) inset;
+  border-radius: 4px;
+
+  .signature-title-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+    width: 25% !important;
+
+
+    .signature-title {
+
+      font-size: 1rem !important;
+
+    }
+
+  }
+
+  .signature-content {
+    margin: 0 !important;
+    height: 5.5rem !important;
+    width: 17rem !important;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .27), 0 0 40px rgba(0, 0, 0, .08) inset;
+    border: 0 !important;
+    border-radius: 4px;
+
+    // // width:  5rem !important;
+    // .canvas {
+
+    //     height: 2rem;
+    // }
+  }
+
+  .outer-buttons-block {
+    margin: 0;
+
+    .inner-button-sign {
+
+      width: 100%;
+
+      button {
+        background-color: #fff;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .27), 0 0 40px rgba(0, 0, 0, .08) inset;
+        border-radius: 4px;
+        width: 100% !important;
+        color: gray;
+
+      }
+
+      margin: 0;
+    }
+  }
+}

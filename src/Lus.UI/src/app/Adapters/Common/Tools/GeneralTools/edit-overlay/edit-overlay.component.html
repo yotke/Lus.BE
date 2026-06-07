@@ -1,0 +1,22 @@
+<div class="edit-overlay" [style.top.px]="top" [style.left.px]="left">
+    <div>
+        <h1>עריכה תוכן</h1>
+    </div>
+    <div *ngFor="let input of inputs">
+        <!-- <app-regular-input [title]="input.key" [(selectedValue)]="input.value"
+            (OnChange)="onInputChange(input.key, $event)" style="display: inline-block;" [style.width.%]="80" [style.height.px]="30">
+        </app-regular-input> -->
+        <div class="overlay-input-container" *ngIf="input.key === 'placeholder' || input.key === 'title'">
+            <label>{{ dictionary[input.key] || input.key }}:</label>
+            <input [(ngModel)]="input.value" (ngModelChange)="onInputChange(input.key, $event)" />
+        </div>
+    </div>
+    <!-- <div>
+        <button (click)="onSave()">Savef</button>
+        <button (click)="onCancel()">Cancel</button>
+    </div> -->
+    <app-btns-container>
+        <app-delete-btn (click)="onCancel()">בטל</app-delete-btn>
+        <app-save-btn (click)="onSave()">שמור</app-save-btn>
+    </app-btns-container>
+</div>

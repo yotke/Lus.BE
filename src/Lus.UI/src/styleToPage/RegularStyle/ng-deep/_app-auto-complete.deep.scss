@@ -1,0 +1,60 @@
+@import '../variables.scss';
+
+.ng-select-container {
+    
+    min-width: $base-size-input*14.5;
+    .ng-input{
+        padding: 0 !important;
+    }
+}
+
+app-auto-complete {
+
+
+    .with-search-icon {
+        .ng-select-container {
+            padding-right: 2rem !important;
+        }
+
+        .ng-placeholder {
+            padding-right: 1rem !important;
+        }
+
+        .ng-input {
+            text-align: right;
+           
+            padding-right: 2.5rem !important;
+        }
+    }
+
+    .ng-select .ng-arrow-wrapper .ng-arrow {
+        border-color: #0AABD5 #db5f5f00 #e4070700 !important;
+    }
+
+    .ng-select.ng-select-opened>.ng-select-container .ng-arrow {
+        border-color: #db5f5f00 #e4070700 #0AABD5 !important;
+    }
+
+}
+
+.expiration-time {
+    app-auto-complete {
+        .ng-select-container {
+            min-width: $base-size-input*10;
+        }
+    }
+
+    .time-number-input {
+        input {
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .mat-mdc-text-field-wrapper {
+            padding: 0 !important;
+        }
+
+        margin-right: 0.5rem;
+        max-width: $base-size-input*4;
+    }
+}

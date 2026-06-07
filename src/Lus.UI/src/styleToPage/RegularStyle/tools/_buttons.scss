@@ -1,0 +1,99 @@
+app-submit-btn,
+app-radio-btn,
+app-save-btn,
+app-delete-btn,
+app-edit-btn,
+app-regular-btn,
+app-add-btn {
+    direction: rtl;
+    
+    button {
+        padding: 1rem;
+        color: #fff !important;
+        font-weight: 700 !important;
+        background-color: #01A8D4 !important;
+       .mat-icon{
+        border: 0.1rem solid #01A8D4;
+        width: unset !important;
+        height: unset !important;
+       }
+
+        :active {
+            transform: translateY(2px);
+            box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+        }
+
+        :hover {
+            color: white;
+            background-color: #01A8D4 !important;
+            box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+        }
+
+    }
+
+    &.approve-btn {
+        button {
+            background-color: green !important;
+        }
+    }
+
+    &.reject-btn {
+        button {
+            background-color: red !important;
+        }
+    }
+
+}
+
+app-add-btn {
+    padding: 0 !important;
+
+    button {
+        background: none !important;
+        border: none !important;
+        // background-color: #fff !important;
+    }
+
+    mat-icon {
+        color: #00A8D4;
+    }
+
+    button :hover {
+        background-color: #01A8D4 !important;
+        color: white;
+    }
+}
+
+.color-select {
+    display: none;
+
+    // max-width:5rem !important;
+    .ng-select-container {
+        min-width: 7rem;
+    }
+
+}
+
+
+
+.add-stage-btn {
+    border: 1px solid #BBBDBA;
+
+    mat-icon {
+        font-size: 2.5rem;
+        font-weight: 500;
+        min-height: 2.5rem;
+        min-width: 2.5rem;
+    }
+}
+
+// button i {
+//     color: #01A8D4;
+//     padding: 0.3rem;
+// }
+// .save-btn {
+//     width: 100%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+// }

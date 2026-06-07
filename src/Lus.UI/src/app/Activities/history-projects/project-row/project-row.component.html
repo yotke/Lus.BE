@@ -1,0 +1,46 @@
+<div class="content-container">
+    <div class="row-headline-container  row col-md-12">
+        <div class="text-content open-btn col-md-1">
+        </div>
+        <app-project-text-row [title]="'שם היזם וסוג תעודה:'" [projectField]="project.ConstrctorTitle" class="col-md-2"
+            [colMd]="2"></app-project-text-row>
+        <app-project-text-row [title]="'כתובת משרד היזם:'" [projectField]="project.ConstrctorAddress" class="col-md-2"
+            [colMd]="2"></app-project-text-row>
+        <app-project-text-row [title]="'מספר היזם:'" [projectField]="project.ConstrctorPhone" class="col-md-2"
+            [colMd]="2"></app-project-text-row>
+        <app-project-text-row [title]="'מספר עוסק מורשה:'" class="col-md-2"
+            [projectField]="project.ConstrctorEntrepreneurNumber" [colMd]="2"></app-project-text-row>
+    </div>
+    <div class="row-headline-container center row col-md-12">
+        <div class="text-content open-btn col-md-1">
+        </div>
+        <app-project-text-row [title]="'מקום הפרויקט:'" [projectField]="project.ProjectLocation" class="col-md-4"
+            [colMd]="4"></app-project-text-row>
+        <app-project-text-row [title]="'מספר חשבונית:'" [projectField]="project.AccountNumber" class="col-md-4"
+            [colMd]="4"></app-project-text-row>
+    </div>
+    <div class="row-headline-container center row col-md-12">
+        <div class="text-content open-btn col-md-1">
+        </div>
+        <app-project-text-row [title]="'המתכנון:'" [projectField]="project.ConstrctorName" class="col-md-4"
+            [colMd]="4"></app-project-text-row>
+        <app-project-text-row [title]="'נושא הפרויקט:'" [projectField]="project.ProjectSubject" class="col-md-4"
+            [colMd]="4"></app-project-text-row>
+    </div>
+    <div class="row-headline-container center row col-md-12">
+        <div class="text-content open-btn col-md-1">
+        </div>
+        <app-project-text-row [title]="'תאריך תחילת חוזה'" [projectField]="changeDate(project.StartContractDate)"
+            class="col-md-4" [colMd]="4"></app-project-text-row>
+        <app-project-text-row [title]="'תאריך סוף חוזה:'" [projectField]="changeDate(project.EndContractDate)"
+            class="col-md-4" [colMd]="4"></app-project-text-row>
+    </div>
+    <div class="row-headline-container center row col-md-12">
+        <div class="text-content open-btn col-md-1">
+        </div>
+        <app-project-text-row [title]="'היחידה המעסיקה:'" [projectField]="project.EmployeeSectionName" class="col-md-4"
+            [colMd]="4"></app-project-text-row>
+        <app-project-text-row [title]="'רמת תעריף:'" [projectField]="project.WorkKindRate" class="col-md-4"
+            [colMd]="4"></app-project-text-row>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<nav aria-label="table-pagination" class="table-pagination" *ngIf="showPager">
+    <ul class="pagination justify-content-center">
+        <li class="page-size-select" aria-label="show in page" *ngIf="pageOptions?.length > 1">
+            <select class="select-input" name="currentPageSize" placeholder="בתצוגה" [(ngModel)]="currentPageSize" (change)="pageSizeEvent($event)">
+                <option *ngFor="let size of pageOptions" [ngValue]="size">
+                    {{size}}
+                </option>
+            </select>
+        </li>
+
+        <li class="prev-page page-item" [ngClass]="{'disabled': currentPage < 2}" *ngIf="allPages > 1">
+            <a class="page-link" aria-label="Previous" tabindex="-1" (click)="pagerEvent(currentPage-1)">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <ul class="pager-list-holder" *ngIf="allPages > 1">
+            <li *ngFor="let num of ActivePages; let i = index" class="page-item" [ngClass]="{'active': currentPage === num}">
+                <a aria-label="page {{num}}" class="page-link" tabindex="{{i}}" (click)="pagerEvent(num)">{{num}}</a>
+            </li>
+        </ul>
+        <li *ngIf="allPages > 1" class="next-page page-item" [ngClass]="{'disabled': currentPage == allPages}">
+            <a class="page-link" aria-label="Next" tabindex="4" (click)="pagerEvent(currentPage+1)">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+
+    </ul>
+</nav>

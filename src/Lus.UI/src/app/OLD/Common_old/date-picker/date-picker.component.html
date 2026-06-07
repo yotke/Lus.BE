@@ -1,0 +1,13 @@
+<mat-form-field *ngIf="control" [ngClass]="combinedClasses" class="date-mat-form-field">
+    <div class="input-headline">{{placeholder}}</div>
+    <input matInput [matDatepicker]="datePicker" [formControl]="control" [min]="min" [max]="max">
+    <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+    <mat-datepicker #datePicker></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field [class]="classes +' '+ 'date-mat-form-field'" *ngIf="!control">
+    <div class="input-headline">{{placeholder}}</div>
+    <input matInput [matDatepicker]="datePicker" [(ngModel)]="selectedValue" [min]="min" [max]="max" >
+    <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+    <mat-datepicker #datePicker></mat-datepicker>
+</mat-form-field>

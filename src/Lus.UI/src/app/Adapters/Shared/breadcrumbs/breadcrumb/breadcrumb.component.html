@@ -1,0 +1,16 @@
+<ol class="breadcrumb">
+    <li>
+        <a [routerLink]="['/']" class="breadcrumb-title" title="חזרה לדף ראשי">
+            <!-- <mat-icon class="breadcrumb-icon">location_history</mat-icon> -->
+            <mat-icon class="breadcrumb-icon">person_pin_circle</mat-icon>
+        </a>
+    </li>
+    <!-- <li>
+        <a [routerLink]="['/Home']" class="breadcrumb-title" title="חזרה לדף ראשי">ראשי  </a>
+    </li> -->
+    <li *ngFor="let breadcrumb of getBreadcRumbsData()">
+        <a [routerLink]="breadcrumb.url">
+            {{ breadcrumb.label }}
+        </a>
+    </li>
+</ol>

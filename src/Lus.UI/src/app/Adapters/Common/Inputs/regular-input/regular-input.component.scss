@@ -1,0 +1,19 @@
+.regular-input-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.regular-mat-form-field {
+  direction: rtl;
+}
+
+.regular-mat-form-field input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none; /* Hide default spinner buttons in WebKit browsers */
+  margin: 0;
+}
+
+.regular-mat-form-field input[type="number"]::-moz-inner-spin-button {
+  -moz-appearance: none; /* Hide default spinner buttons in Firefox */
+}

@@ -1,0 +1,38 @@
+﻿.btn-tack-container {
+    direction: rtl;
+  }
+
+  .tack-btn {
+    display: flex;
+    padding: 0.4rem 0.6rem;
+    align-items: center;
+    justify-content: center;
+    background-color: inherit;
+    color: #6f6f6f;
+    border: none;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    @keyframes pinToNotPined {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate3d(1, 1, 1, 45deg);
+        }
+    }
+
+    .not-pined {
+        animation: pinToNotPined 0.3s forwards;
+    }
+
+    &:active {
+        transform: translateY(2px);
+        color: #a0a0a0;
+    }
+
+    &:hover {
+        transform: scale(1.1);
+    }
+  }

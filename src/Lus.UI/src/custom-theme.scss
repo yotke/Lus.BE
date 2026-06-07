@@ -1,0 +1,83 @@
+
+:root {
+  --backgroundColor: #fff;
+  --linkColor: var(--accentColor);
+  --linkHoverColor: #0a2540;
+  --buttonColor: var(--accentColor);
+  --buttonHoverColor: #0a2540;
+  --buttonDisabledColor: #cfd7df;
+  --buttonDisabledOpacity: 0.7;
+  --knockoutColor: #fff;
+  --knockoutDisabledColor: #8898aa;
+  --guideSolidColor: rgba(66, 71, 112, 0.06);
+  --guideDashedColor: rgba(66, 71, 112, 0.09);
+  --titleColor: #0a2540;
+  --textColor: #425466;
+  --inputBackground: #f1f4f7;
+  --inputPlaceholderColor: #acb9c5;
+  --inputTextColor: #0a2540;
+  --inputErrorAccentColor: #ff5191;
+  --annotationColor: #8c9eb1;
+  --maskFadeColor: rgba(0, 0, 0, 0.4);
+  --navColor: #0a2540;
+  --navHoverColor: #0a2540;
+  --navHoverOpacity: 0.6;
+  --footerColor: #0a2540;
+  --cardBorderColor: #cbd6e0;
+  --cardBackground: #fff;
+  --subcardBackground: #f6f9fc;
+  --gridSubcardBackground: #f6f9fc;
+  --tableIconColor: #8c9eb1;
+  --stripeAccentWhite: #fff;
+  --stripeAccentLight: #e3e7ec;
+  --stripeAccentDark: #0a2540;
+  --bulletColor: #cfd7df;
+  --footnoteTextColor: #4d5b78;
+  --disclaimerTextColor: #707f98;
+  --inlineCodeTextColor: #2c3a57;
+  --inlineCodeBackground: #e6ecf2;
+  --socialLogoColor: #c4ccd8;
+  --socialLogoHoverColor: #0a2540;
+
+  --accentColor: #635bff;
+  --guideBackground: #5d69e3;
+  --guideDarkColor: #4d5ae0;
+  --guideLightColor: #6772e5;
+  --guideLighterColor: #7a84e9;
+  --guideLightestColor: #8d95ec;
+
+  --blendBackground: #80e9ff;
+  --blendIntersection: #0048e5;
+  --blendForeground: #7a73ff;
+  --gradientColorZero: #a960ee;
+  --gradientColorOne: #ff333d;
+  --gradientColorTwo: #90e0ff;
+  --gradientColorThree: #ffcb57;
+  --gradientColorZeroTransparent: rgba(169, 96, 238, 0);
+  --gradientColorOneTransparent: rgba(255, 51, 61, 0);
+  --gradientColorTwoTransparent: rgba(144, 224, 255, 0);
+  --gradientColorThreeTransparent: rgba(255, 203, 87, 0);
+  --shadeOneColor: #02bcf5;
+  --shadeTwoColor: #0073e6;
+  --shadeThreeColor: #003ab9;
+  --shadeFourColor: #635bff;
+  --shadeFiveColor: #002c59;
+  --shadeSixColor: #09cbcb;
+
+  // --arrowSpacing: 5px;
+  // --arrowHoverTransition: 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  // --arrowHoverOffset: translateX(3px);
+  // --arrowTipTransform: none;
+  // --arrowLineOpacity: 0;
+  // position: relative;
+  // top: 1px;
+  // margin-left: var(--arrowSpacing);
+  // stroke-width: 2px;
+  // fill: none;
+  // stroke: currentColor;
+}
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+// @include angular-material-theme($muni-jobs-theme);

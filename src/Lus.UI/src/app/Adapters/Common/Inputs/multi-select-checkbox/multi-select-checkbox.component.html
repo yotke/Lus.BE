@@ -1,0 +1,42 @@
+<div class="multi-select-container">
+  <!-- Optional label -->
+  <mat-label *ngIf="showLabel">{{ title }}</mat-label>
+
+  <div [class]="class" [attr.data-name]="name" style="position: relative;"
+    [ngClass]="{ 'with-search-icon': searchIcon }">
+
+    <!-- REACTIVE FORMS BLOCK -->
+    <ng-select *ngIf="control" [disabled]="disabled" [attr.name]="'ng-multiselect_checkbox_'+title+'_' + uniqueId"
+      appearance="fill" [multiple]="true" [closeOnSelect]="false" [hideSelected]="true" clearable="true"
+      [formControl]="control">
+      <!-- Prevent default selection by stopping propagation -->
+      <ng-option *ngFor="let item of listInput" (click)="$event.stopPropagation()">
+        <!-- Clicking the checkbox toggles selection -->
+        <label>
+          <input type="checkbox" [checked]="selectedValues.includes(item.Id ?? 0)"
+            (change)="toggleSelection(item.Id, $event); $event.stopPropagation();">
+          {{ item.Name }}
+        </label>
+      </ng-option>
+    </ng-select>
+
+    <!-- TEMPLATE-DRIVEN BLOCK -->
+    <ng-select *ngIf="!control" [disabled]="disabled" [attr.name]="'ng-multiselect_checkbox_'+title+'_' + uniqueId"
+      appearance="fill" [multiple]="true" [closeOnSelect]="false" [placeholder]="placeholder" clearable="true"
+      [hideSelected]="true" [(ngModel)]="selectedValues">
+      <ng-option *ngFor="let item of listInput" (click)="$event.stopPropagation()">
+        <!-- Clicking the checkbox toggles selection -->
+        <label>
+          <input type="checkbox" [checked]="selectedValues.includes(item.Id ?? 0)"
+            (change)=" $event.stopPropagation();toggleSelection(item.Id, $event);" [value]="item.Id">
+          {{ item.Name }}
+        </label>
+      </ng-option>
+    </ng-select>
+
+    <!-- Search icon -->
+    <span *ngIf="searchIcon" class="search-icon">
+      <mat-icon>search</mat-icon>
+    </span>
+  </div>
+</div>

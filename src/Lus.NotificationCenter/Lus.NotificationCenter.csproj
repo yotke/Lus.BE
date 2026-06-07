@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Configurations>Debug;Release;TestingServer</Configurations>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="EmailServices\Templates\ConfirmEmail.html" />
+        <None Remove="EmailServices\Templates\LogInWithoutPassword.html" />
+        <None Remove="EmailServices\Templates\ResetPassword.html" />
+        <None Remove="EmailServices\Templates\SendChangedByAdminApplicationToTender.html" />
+        <None Remove="EmailServices\Templates\SendConfirmApplicationToTender.html" />
+        <None Remove="EmailServices\Templates\SendProtocol.html" />
+        <None Remove="EmailServices\Templates\SendSignatureToken.html" />
+        <None Remove="EmailServices\Templates\UserLoginInfoNotification.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="EmailServices\Templates\LogInWithoutPassword.html">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="EmailServices\Templates\SendChangedByAdminApplicationToTender.html">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="EmailServices\Templates\SendProtocol.html">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="EmailServices\Templates\UserLoginInfoNotification.html">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="EmailServices\Templates\ResetPassword.html">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="EmailServices\Templates\ConfirmEmail.html">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="EmailServices\Templates\SendConfirmApplicationToTender.html">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="EmailServices\Templates\SendSignatureToken.html">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="System.ServiceModel.Http" Version="6.0.0" />
+        <PackageReference Include="System.ServiceModel.Primitives" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Lus.Authorization\Lus.Authorization.csproj" />
+        <ProjectReference Include="..\Lus.Contracts\Lus.Contracts.csproj" />
+    </ItemGroup>
+
+        </Project>

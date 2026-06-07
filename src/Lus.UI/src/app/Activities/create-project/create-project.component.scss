@@ -1,0 +1,22 @@
+.create-project-container{
+
+    h1,h2,h3 {
+        text-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.1);
+        transition: text-shadow 0.3s ease-in-out;
+    }
+    
+    h1,h2,h3:hover {
+        text-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.2);
+    }
+    h1,h2,h3 {
+        padding: 1rem;
+        background: linear-gradient(45deg, #89c2ff, #696969); /* Choose your gradient colors */
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    direction: rtl;
+    .input-container{
+        direction: rtl;
+    }
+}

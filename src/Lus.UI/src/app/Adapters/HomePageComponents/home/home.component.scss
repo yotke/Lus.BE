@@ -1,0 +1,27 @@
+.home-page-contaier{
+    height: 100vh;
+    padding: 1rem;
+    background-image: url('../../../../assets/Time_Management_ai.svg');
+    background-repeat: no-repeat;    /* The image will not repeat */
+    background-position: center;     /* The image will be centered */
+    background-size: cover;          /* The image will cover the entire container */
+    .text-container{
+        direction: ltr;
+        position: absolute;
+        left: 10vw;
+        top: 25vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: white;
+    }
+    .home-page-button{
+        background-color: rgb(255, 217, 0);
+        border: none;
+        font-size: 1rem;
+        font-weight: 700;
+        border-radius: 1.5rem;
+        padding: 1rem;
+    }
+}

@@ -1,0 +1,29 @@
+::ng-deep .cdk-overlay-connected-position-bounding-box {
+    /* Override specific styles */
+    //top: 275px !important;
+    /* Add any other desired style modifications */
+  }
+  
+  .filtering-pagination {
+    direction: rtl;
+    text-align: right;
+  
+    input,
+    button {
+      direction: rtl;
+      text-align: right;
+    }
+  
+    .mat-form-field {
+      direction: rtl;
+      text-align: right;
+    }
+  }
+  
+  .filter-form {
+    direction: rtl;
+    text-align: right;
+    padding-left: 0.7em;
+    padding-right: 0.7em;
+  }
+  

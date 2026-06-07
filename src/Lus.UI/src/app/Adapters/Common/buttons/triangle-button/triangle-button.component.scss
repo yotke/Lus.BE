@@ -1,0 +1,14 @@
+.triangle-button {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 30px 0 30px 30px;
+    border-color: transparent transparent transparent gray;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+}
+
+.triangle-button:hover {
+    border-color: transparent transparent transparent darkgray; /* Hover effect */
+}

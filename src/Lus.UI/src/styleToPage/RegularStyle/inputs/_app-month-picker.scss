@@ -1,0 +1,46 @@
+.date-mat-form-field {
+  width: 100%;
+  padding: 0 !important;
+  display: flex;
+
+  &.padding-zero {
+    .mat-mdc-form-field-infix {
+      padding: 0 !important;
+    }
+  }
+
+}
+
+app-month-picker {
+
+  width: 100%;
+
+  .date-container {
+
+    width: 100%;
+  }
+
+  // &.system-date{
+  //  .mat-mdc-text-field-wrapper
+  //   {
+  //     .mat-mdc-form-field-input-control{
+  //       color: aliceblue;
+  //     }
+  //     // margin-top: 1rem;
+  //     color: aliceblue;
+  //     background: #009097;
+  //   }
+  // }
+  .hide-filed {
+    display: none;
+    opacity: 0;
+  }
+}
+
+.mat-calendar-body-cell-content {
+  display: none;
+}
+
+.mat-calendar-body-label {
+  pointer-events: none; // Ensure you can't navigate to the day view.
+}

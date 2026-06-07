@@ -1,0 +1,16 @@
+.date-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.date-mat-form-field {
+  width: 100%;
+
+  .hide-filed {
+    display: none;
+    opacity: 0;
+  }
+}

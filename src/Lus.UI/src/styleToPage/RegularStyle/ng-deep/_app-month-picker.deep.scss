@@ -1,0 +1,44 @@
+@import '../variables.scss';
+
+app-month-picker {
+    .mat-mdc-input-element {
+        position: absolute;
+        top: 1rem !important;
+    }
+
+    .mat-mdc-text-field-wrapper {
+        padding: 0 !important;
+    }
+
+    .mat-mdc-form-field {
+        min-height: 2.5rem !important;
+        padding: 0;
+        margin: 0;
+    }
+
+    .mat-mdc-form-field-flex {
+        flex-direction: row-reverse;
+        align-items: center;
+    }
+
+}
+
+.system-date {
+    width: 30%;
+    color: white !important;
+
+    .date-container {
+        width: 90%;
+    }
+
+    .mat-mdc-text-field-wrapper {
+
+        background: #009097 !important;
+
+        .mat-mdc-input-element {
+            color: white !important;
+        }
+    }
+
+    app-month-picker {}
+}

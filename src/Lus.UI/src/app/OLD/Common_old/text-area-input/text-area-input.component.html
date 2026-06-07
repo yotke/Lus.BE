@@ -1,0 +1,8 @@
+<mat-form-field [title]="title" *ngIf="control" class="textarea-mat-form-field">
+    <mat-label>{{title}}</mat-label>
+    <textarea matInput [placeholder]="placeholder" [formControl]="control"></textarea>
+</mat-form-field>
+<mat-form-field [title]="title" *ngIf="!control" class="textarea-mat-form-field">
+    <mat-label>{{title}}</mat-label>
+    <textarea matInput [(ngModel)]="selectedValue" [placeholder]="placeholder"></textarea>
+</mat-form-field>

@@ -1,0 +1,80 @@
+.mat-toolbar {
+    color: white;
+    background-color: #005683;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    direction: rtl;
+
+    .headline-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+    }
+
+    .btn-container {
+        width: 10%;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+mat-table {
+    direction: rtl;
+}
+
+mat-table mat-row mat-cell {
+    border-left: 1px solid #d3d2d2;
+    border-right: 1px solid #d3d2d2;
+    display: flex;
+    justify-content: center;
+    font-size: 1rem;
+    color: #005683;
+    /* Optional padding for better spacing */
+    /* padding: 0.1em 0.5em; */
+}
+
+mat-table mat-header-row mat-header-cell {
+    display: flex;
+    border: 1px solid rgb(211, 210, 210);
+    justify-content: center;
+    font-size: 1.1rem;
+    color: rgb(0, 86, 131);
+    /* Optional padding for consistency with cell */
+    /* padding: 0.1em 0.5em; */
+}
+
+input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 1.1rem;
+}
+
+input.route-table-disabled:disabled,
+mat-checkbox.route-table-disabled:disabled {
+    background-color: inherit;
+    /* Remove gray background */
+    opacity: 1;
+    /* Ensure the input/checkbox is fully visible */
+    color: #000;
+    /* Optional: set color to black */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.none {
+    display: none;
+}
+
+.clean-input {
+    background-color: inherit;
+    border: none;
+    width: 100%;
+    padding: 1rem;
+    height: 100%;
+}

@@ -1,0 +1,61 @@
+@import '../variables.scss';
+
+app-multi-select {
+    .with-search-icon {
+        .ng-select-container {
+            padding-right: 2rem !important;
+        }
+
+        .ng-placeholder {
+            padding-right: 1rem !important;
+        }
+
+        .ng-input {
+            text-align: right;
+            padding-right: 2.5rem !important;
+        }
+    }
+
+    .ng-select .ng-arrow-wrapper .ng-arrow {
+        border-color: #0AABD5 #db5f5f00 #e4070700 !important;
+    }
+
+    .ng-select.ng-select-opened>.ng-select-container .ng-arrow {
+        border-color: #db5f5f00 #e4070700 #0AABD5 !important;
+    }
+
+}
+
+app-basic-component-settings {
+    app-multi-select {
+        .ng-select-container {
+            min-width: $base-size-input*39;
+            height: 100%;
+        }
+    }
+}
+.alert-message-definition-container{
+
+    app-multi-select .ng-select-container {
+    //   min-width: 13.7rem;
+    //   max-width: 13.7rem;
+      height: 100%;
+    }
+
+    .DeliveryMethods{
+        .ng-select-container {
+            width: 14.9rem;
+            height: 100%;
+          }
+    }
+  
+    .addressee{
+      .ng-select-container {
+        width: 38rem;
+        height: 100%;
+      }
+      .ng-input {
+        padding-right: 0.5rem !important; 
+      }
+    }
+}

@@ -1,0 +1,4 @@
+<mat-toolbar [class]="'mat-toolbar'+' '+class" [color]="color">
+    <h1 [title]="title">{{title}} <span *ngIf="subTitle">| {{subTitle}}  {{freeText}}</span></h1>
+    <ng-content select="[left-content]"></ng-content>
+</mat-toolbar>

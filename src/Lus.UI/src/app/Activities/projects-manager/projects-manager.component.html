@@ -1,0 +1,47 @@
+<section class="project-manager-container">
+    <mat-horizontal-stepper #stepper class="stepper-container">
+        <mat-step label="בחירת פרויקט">
+            <section class="inputs-project-container" class="row col-md-12">
+                <ng-template [ngIf]="!isNewProject">
+                    <div class="col-md-6">
+                        <h1>בחירת פרויקט</h1>
+                        <app-auto-complete [listInput]="monthlyProjectListIdName" [(selectedValue)]="projectId" [title]="'בחר פרויקט'"
+                            [placeholder]="'שם פרויקט'" (OnChange)="OnProjectSelected($event)"></app-auto-complete>
+                        <app-add-btn *ngIf="!(isNewProject||project)" [title]="'הוסף פרויקט חדש'"
+                            (buttonClicked)="OnAdd()"></app-add-btn>
+                    </div>
+                </ng-template>
+                <ng-template [ngIf]="isNewProject||project">
+                    <app-create-project (OnReturnCallback)="HideProjectComponent()"
+                        (OnSaveCallback)="SelectProject($event)" [CurrDate]="CurrSystemDate"
+                        [CurrProject]="project"></app-create-project>
+                </ng-template>
+            </section>
+            <div class="stepper-btns-container">
+                <button mat-button matStepperPrevious disabled>הקודם</button>
+                <button mat-button matStepperNext>הבא</button>
+            </div>
+        </mat-step>
+        <mat-step label="ניהול זמני הפרויקט">
+            <app-data-loader [CurrProject]="project" [ProjectId]="project.Id" *ngIf="project"></app-data-loader>
+            <div class="stepper-btns-container">
+                <button mat-button matStepperPrevious>הקודם</button>
+                <button mat-button matStepperNext>הבא</button>
+            </div>
+        </mat-step>
+        <mat-step label="ייצוא לאקסל">
+            <section class="exel-step-container">
+                <app-project-validator [CurrProject]="project" [isExelStep]="true"
+                    (hasCollisionEmiter)="onCollision($event)"></app-project-validator>
+                <app-history-projects [isMonthly]="true" [projectList]="monthlyProjects"
+                    [projectListIdName]="monthlyProjectListIdName"></app-history-projects>
+                <app-excel-export *ngIf="monthlyProjects&&monthlyProjects.length>0" [Project]="project"
+                    [hasCollision]="hasCollision" [MonthlyProjects]="monthlyProjects"></app-excel-export>
+            </section>
+            <div class="stepper-btns-container">
+                <button mat-button matStepperPrevious>הקודם</button>
+                <button mat-button class="create-new-project" (click)="createNewProject()">צור פרויקט נוסף</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</section>

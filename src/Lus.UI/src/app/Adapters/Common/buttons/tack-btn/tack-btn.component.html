@@ -1,0 +1,11 @@
+﻿<div class="btn-tack-container">
+  <button
+    (click)="onClick()"
+    type="button"
+    class="tack-btn"
+    [title]="isPined ? 'Unpin' : 'Pin'"
+  >
+    <mat-icon *ngIf="isPined">push_pin</mat-icon>
+    <mat-icon *ngIf="!isPined" [class]="'not-pined'">push_pin</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,66 @@
+.loader-data-container{
+  .inputs-select-row{
+    margin: 1rem;
+  }
+  .time-data-container{
+    box-shadow: 0.5rem 0.5rem 1rem rgb(163, 163, 163);
+    // margin-bottom: 1rem;
+    border: 0.1rem solid rgb(200, 200, 200);;
+    padding: 1rem;
+    padding-bottom: 2rem;
+    margin-bottom: 1rem;
+  }
+  .date-time-group-container{
+    position:relative;
+  }
+  .time-headline-container{
+    display: flex;
+    align-items: center;
+  
+    // justify-content:space-between;
+    mat-icon{
+      cursor: pointer;
+      // margin: 0 10vw;
+      text-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.1);
+      transition: text-shadow 0.3s ease-in-out;
+      &:hover {
+        text-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.2);
+      }
+      background: linear-gradient(45deg, #89c2ff, #696969); /* Choose your gradient colors */
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  }
+ 
+  h1,h2,h3,h4,h5 {
+        text-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.1);
+        transition: text-shadow 0.3s ease-in-out;
+      }   
+      h1,h2,h3,h4,h5:hover {
+        text-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.2);
+      }
+      h1,h2,h3,h4,h5 {
+        padding: 1rem;
+        background: linear-gradient(45deg, #89c2ff, #696969); /* Choose your gradient colors */
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+    direction: rtl;
+    .input-container{
+     direction: rtl;
+    }
+    .data-loader-mat-form-field{
+        width: 100%;
+        ::ng-deep .mat-mdc-form-field-infix{
+          display: flex;
+        }
+    }
+    // .textarea-input{
+    //   min-height: 50vh;
+    // }
+    .table-conainer{
+        direction: rtl;
+    }
+}

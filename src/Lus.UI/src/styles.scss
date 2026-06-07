@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "../src/assets/themes/material.theme.css";
+
+h1 {
+    font-size: 2rem;
+    text-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.1);
+    transition: text-shadow 0.3s ease-in-out;
+  }
+  
+  h1:hover {
+    text-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.2);
+  }
+  h1 {
+    padding: 1rem;
+    background: linear-gradient(45deg, #89c2ff, #696969); /* Choose your gradient colors */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+.input-container{
+ direction: rtl;
+
+}

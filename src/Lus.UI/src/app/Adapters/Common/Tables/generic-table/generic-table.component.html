@@ -1,0 +1,68 @@
+<!--
+  A mat-toolbar at the top for the header row.
+  We bind [style.backgroundColor]="headerColor" to dynamically set the header color
+-->
+
+<!-- Actual mat-table -->
+<div class="table-container">
+    <mat-table mat-table [dataSource]="dataSource" [class]="class+ ' ' + 'mat-elevation-z8' ">
+        <!-- Generate columns dynamically -->
+        <ng-container *ngFor="let column of columns" [matColumnDef]="column.field">
+            <mat-header-cell *matHeaderCellDef>{{ column.header }}</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <!-- Custom rendering for "Status" field -->
+                <ng-container *ngIf="column.field === 'Status'; else otherFields">
+                    <div class="Status">
+                        <span>{{ row[column.field] }}/4</span>
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                </ng-container>
+                <!-- Other fields -->
+                <ng-template #otherFields>
+                    <ng-container *ngIf="isBoolean(row[column.field]); else textContent">
+                        <!-- Checkbox for boolean values -->
+                        <mat-checkbox [(ngModel)]="row[column.field]" [disabled]="disabledAll"
+                            (click)="$event.stopPropagation()">
+                        </mat-checkbox>
+                    </ng-container>
+                    <!-- Fallback template for non-boolean values -->
+                    <ng-template #textContent>
+                        {{ row[column.field] }}
+                    </ng-template>
+                </ng-template>
+            </mat-cell>
+        </ng-container>
+
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions" *ngIf="showActions">
+            <mat-header-cell *matHeaderCellDef>פעולות</mat-header-cell>
+            <mat-cell *matCellDef="let row" class="actions-cell">
+                <button mat-icon-button *ngIf="onPdfCallBack" (click)="onPdfCallBack(row, $event)">
+                    <i class="fa-regular fa-file-pdf"></i>
+                </button>
+                <button mat-icon-button *ngIf="onCopyCallBack" (click)="onCopyCallBack(row, $event)">
+                    <i class="fa-regular fa-file-lines"></i>
+                </button>
+                <button mat-icon-button *ngIf="onEditCallBack" (click)="onEditCallBack(row, $event)">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </button>
+                <button mat-icon-button *ngIf="onDeleteCallBack" (click)="onDeleteCallBack(row, $event)">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+                <button mat-icon-button *ngIf="onPlayCallBack" (click)="onPlayCallBack(row, $event)">
+                    <i class="fa-regular fa-play-circle"></i>
+                </button>
+
+                <button mat-icon-button *ngIf="onShowDataCallBack" (click)="onShowDataCallBack(row, $event)">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Table Header & Data Rows -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row class="element-row" *matRowDef="let row; columns: displayedColumns"
+            (click)="CallBackFunction(row.Id)"></mat-row>
+    </mat-table>
+</div>

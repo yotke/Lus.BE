@@ -1,0 +1,16 @@
+<mat-form-field *ngIf="control" class="data-loader-mat-form-field" appearance="fill">
+    <mat-label>{{placeholder}}</mat-label>
+    <input matInput [ngxMatTimepicker]="timepicker" [formControl]="control" [format]="24" placeholder="12:00"
+        [min]="min" [max]="max" />
+
+    <ngx-mat-timepicker-toggle [for]="timepicker"></ngx-mat-timepicker-toggle>
+    <ngx-mat-timepicker #timepicker></ngx-mat-timepicker>
+</mat-form-field>
+<mat-form-field *ngIf="!control" class="data-loader-mat-form-field" appearance="fill">
+    <mat-label>{{placeholder}}</mat-label>
+    <input matInput [ngxMatTimepicker]="timepicker" [(ngModel)]="selectedValue" [format]="24" placeholder="12:00"
+        [min]="min" [max]="max" />
+
+    <ngx-mat-timepicker-toggle [for]="timepicker"></ngx-mat-timepicker-toggle>
+    <ngx-mat-timepicker #timepicker></ngx-mat-timepicker>
+</mat-form-field>

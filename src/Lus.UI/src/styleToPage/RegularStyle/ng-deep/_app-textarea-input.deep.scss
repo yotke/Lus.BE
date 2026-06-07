@@ -1,0 +1,13 @@
+app-textarea-input {
+    .mat-mdc-form-field-flex {
+        height: unset;
+        min-height: unset;
+        .mat-mdc-form-field-infix{
+            padding: 0 !important;
+        }
+    }
+
+    .mat-mdc-text-field-wrapper {
+        padding: 0 $base-size-input*1.6 !important;
+      }
+}

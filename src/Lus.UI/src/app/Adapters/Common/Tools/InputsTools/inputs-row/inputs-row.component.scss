@@ -1,0 +1,9 @@
+.input-row-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .icon-container {
+        margin-left: 0.5rem;
+    }
+}

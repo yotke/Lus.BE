@@ -1,0 +1,69 @@
+.radio-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.regular {
+    .radio-btn-input-container {
+        cursor: pointer;
+    }
+
+    &.radio-btn-group-input {
+
+        ::ng-deep .mdc-radio {
+            display: none;
+        }
+
+        ::ng-deep .mdc-form-field.mat-internal-form-field {
+
+            // display: flex;
+            padding: 0 1rem;
+
+            .mdc-label {
+                font-weight: 600;
+                cursor: pointer;
+            }
+
+            text-align: center;
+        }
+
+        .input-headline {
+            border: 0.05rem solid rgba(172, 172, 172, 0.445) !important;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 550;
+            color: rgb(87, 86, 86);
+            background-color: rgb(245 245 245);
+        }
+
+        ::ng-deep .mdc-radio__background {
+            display: none;
+        }
+
+        ::ng-deep .mat-mdc-radio-button {
+            // height: 5rem !important;
+        }
+
+        ::ng-deep .mdc-form-field.mat-internal-form-field {
+            height: 2.25rem;
+            border: 0.1rem solid rgba(172, 172, 172, 0.445) !important;
+
+        }
+
+        ::ng-deep .mdc-label {
+            min-width: 3rem;
+        }
+
+        ::ng-deep .mat-mdc-radio-checked {
+            .mdc-form-field.mat-internal-form-field {
+                background-color: #3f51b5;
+                color: white;
+
+            }
+        }
+
+    }
+}

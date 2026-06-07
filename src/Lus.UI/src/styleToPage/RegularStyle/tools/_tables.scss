@@ -1,0 +1,121 @@
+  app-user-alert-manager,  app-alert-messages-table {
+      mat-table {
+          box-shadow: none !important;
+      }
+
+      mat-header-row {
+          background-color: #E3E6E0 !important;
+      }
+
+      mat-header-cell {
+          color: #000000;
+          font-size: 1rem;
+      }
+  }
+
+  app-alert-messages-table{
+    mat-header-cell{
+        justify-content: start;
+    }
+    mat-row, mat-cell{
+        justify-content: start;
+    }
+    // .actions-cell{
+    //     justify-content: center;
+    // }
+  }
+
+  app-form-definition-manager {
+      mat-table {
+          box-shadow: none !important;
+      }
+  }
+
+  app-alert-message-definition {
+      mat-table {
+          box-shadow: none !important;
+      }
+  }
+
+
+  /* Header row styling */
+  mat-header-row {
+      background-color: #404552 !important;
+      margin-top: 3rem;
+
+  }
+
+  mat-header-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: #ffffff;
+      //   font-weight:lighter;
+      border-bottom: 1px solid #000000;
+  }
+
+  /* Cell styling */
+  mat-row,
+  mat-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #000;
+      background-color: #ffffff;
+      white-space: nowrap;
+  }
+
+  /* Actions cell to align icons on the left side in RTL context */
+  .actions-cell {
+      justify-content: flex-start;
+      padding: 0 0.5rem;
+
+      button {
+          margin-left: 0.5rem;
+          color: #01A8D4;
+          /* teal color for icons */
+      }
+
+      mat-icon {
+          vertical-align: middle;
+      }
+  }
+
+  .request-table-style {
+
+      /* Header row styling */
+      mat-header-row {
+          background-color: #80D8FA !important;
+      }
+
+      i {
+          color: #00A8D4;
+          font-size: 1.5rem;
+          cursor: pointer;
+      }
+
+      mat-header-cell {
+
+          color: #000;
+
+          //   margin-top: 3rem;
+
+      }
+  }
+
+  app-generic-table{
+    .info-btn{
+        cursor: default !important;
+    }
+}
+
+.cdk-overlay-container .mat-mdc-tooltip-surface.mdc-tooltip__surface {
+    font-size: 1rem !important; /* Adjust the size as needed */
+    color: white !important;    /* Optional: Tooltip text color */
+    background-color: black !important; /* Optional: Tooltip background color */
+    padding: 8px !important;    /* Optional: Add padding */
+    border-radius: 4px !important; /* Optional: Add rounded corners */
+  }
+  

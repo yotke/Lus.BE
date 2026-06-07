@@ -1,0 +1,22 @@
+<mat-toolbar class="mat-toolbar" color="primary">
+    <h1 class="main-title"> טבלת נתונים </h1>
+</mat-toolbar>
+<mat-table mat-table class="mat-table mat-elevation-z8">
+    <ng-container class="input-container" *ngFor="let field of tenderDisplayedColumns" matColumnDef="{{field}}">
+        <mat-header-cell *matHeaderCellDef> {{field}} </mat-header-cell>
+        <mat-cell [attr.data-title]="field" *matCellDef="let element"
+            class="{{invalidInput(field,element.Id)?'invalid-input':''}}">
+            <input [type]="checkType(element,field)" *ngIf="checkType(element,field)!=='checkbox'"
+                [disabled]="(field==='Id')" [required]="checkValidate(element,field)"
+                [(ngModel)]="element[field]">
+            <mat-checkbox *ngIf="checkType(element,field)==='checkbox'" [(ngModel)]="element[field]"
+                ng-true-value="true" ng-false-value="false" [ngModelOptions]="{standalone: true}">
+            </mat-checkbox>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="tenderDisplayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: tenderDisplayedColumns;"
+        [ngClass]="{hovered: row.hovered, highlighted: row.highlighted}" (click)="row.hasChanged = true;"
+        matRipple class="element-row">
+    </mat-row>
+</mat-table>

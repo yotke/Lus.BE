@@ -1,0 +1,42 @@
+.project-manager-container{
+ ::ng-deep .mat-horizontal-content-container{
+  min-height: 100vh;
+ }
+    h1 {
+        text-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.1);
+        transition: text-shadow 0.3s ease-in-out;
+      }
+      
+      h1:hover {
+        text-shadow: 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.2);
+      }
+      h1 {
+        padding: 1rem;
+        background: linear-gradient(45deg, #89c2ff, #696969); /* Choose your gradient colors */
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+    direction: rtl;
+    .input-container{
+     direction: rtl;
+    }
+    .exel-step-container{
+      position: relative;
+    }
+    .stepper-btns-container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 1rem 0 ;
+    
+      button{
+        background-color: rgb(255, 113, 113);
+        color: rgb(255, 255, 255);
+        &.create-new-project{
+          background-color: rgb(113, 158, 255);
+        }
+      }
+
+    }
+}

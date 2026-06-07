@@ -1,0 +1,7 @@
+<ng-select *ngIf="control" appearance="fill" [placeholder]="placeholder" [formControl]="control">
+    <ng-option *ngFor="let item of listInput" [value]="item">{{ item.Name + ' - ' + item.Id }}</ng-option>
+</ng-select>
+<ng-select *ngIf="!control" appearance="fill" (change)="emitSelectedValueChange(selectedValue)"
+    [(ngModel)]="selectedValue" [placeholder]="placeholder">
+    <ng-option *ngFor="let item of listInput" [value]="item">{{ item.Name + ' - ' + item.Id }}</ng-option>
+</ng-select>

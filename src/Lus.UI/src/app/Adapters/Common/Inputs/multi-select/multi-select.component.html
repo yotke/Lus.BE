@@ -1,0 +1,32 @@
+<div class="multi-select-container">
+  <!-- Optional label -->
+  <mat-label *ngIf="showLabel">{{ title }}</mat-label>
+
+  <div [class]="class" [attr.data-name]="name" style="position: relative;"
+    [ngClass]="{ 'with-search-icon': searchIcon }">
+
+    <!-- REACTIVE FORMS BLOCK -->
+    <ng-select *ngIf="control" [disabled]="disabled" [attr.name]="'ng-multiselect_'+title+'_' + uniqueId"
+      appearance="fill" [placeholder]="placeholder" [title]="title" [formControl]="control" [multiple]="true"
+      [closeOnSelect]="false" [hideSelected]="true" clearable="true" (change)="onNgSelectChange($event)">
+      <ng-option *ngFor="let item of listInput" [value]="item.Id">
+        {{ item.Name }}
+      </ng-option>
+    </ng-select>
+
+    <!-- TEMPLATE-DRIVEN BLOCK -->
+    <ng-select *ngIf="!control" [disabled]="disabled" [attr.name]="'ng-multiselect_'+title+'_' + uniqueId"
+      appearance="fill" [multiple]="true" [closeOnSelect]="false" [placeholder]="placeholder" clearable="true"
+      [hideSelected]="true" [(ngModel)]="selectedValues" (change)="onNgSelectChange($event)">
+      <ng-option *ngFor="let item of listInput" [value]="item.Id">
+        {{ item.Name }}
+      </ng-option>
+    </ng-select>
+
+    <!-- Search icon -->
+    <span *ngIf="searchIcon" class="search-icon">
+      <mat-icon>search</mat-icon>
+    </span>
+
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<mat-form-field *ngIf="control" [ngClass]="combinedClasses" class="date-mat-form-field">
+    <div class="input-headline">{{placeholder}}</div>
+    <input *ngIf="innerValue" type="text" matInput [value]="ShowOnlyMonth(innerValue)">
+    <input [ngClass]="{'hide-filed':innerValue}" matInput [value]="innerValue" [matDatepicker]="picker"
+        [formControl]="control">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+        (monthSelected)="chosenMonthHandler($event)">
+    </mat-datepicker>
+</mat-form-field>
+<mat-form-field *ngIf="!control" [ngClass]="combinedClasses" class="date-mat-form-field">
+    <div class="input-headline">{{placeholder}}</div>
+    <input *ngIf="innerValue" type="text" matInput [value]="ShowOnlyMonth(innerValue)">
+    <input [ngClass]="{'hide-filed':innerValue}" matInput [value]="innerValue" [matDatepicker]="picker"
+        [(ngModel)]="selectedValue">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+        (monthSelected)="chosenMonthHandler($event)">
+    </mat-datepicker>
+</mat-form-field>

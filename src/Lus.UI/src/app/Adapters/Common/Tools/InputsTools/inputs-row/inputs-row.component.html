@@ -1,0 +1,6 @@
+<div class="input-row-container" [style.height.px]="height">
+    <div class="icon-container" *ngIf="withDeleteRow">
+        <mat-icon (click)="onClick()">delete_outline</mat-icon>
+    </div>
+    <ng-content></ng-content>
+</div>

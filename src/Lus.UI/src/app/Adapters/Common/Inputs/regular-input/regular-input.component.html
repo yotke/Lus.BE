@@ -1,0 +1,15 @@
+<div class="regular-input-container">
+       <mat-label *ngIf="showLabel">{{title}}</mat-label>
+       <mat-form-field [title]="title" *ngIf="control" [ngClass]="inputClass" [ngStyle]="inputStyle"
+              class="regular-mat-form-field">
+              <mat-label *ngIf="!showLabel&&inputType!='number'">{{title}}</mat-label>
+              <input matInput [placeholder]="placeholder" [formControl]="control" [type]="inputType">
+       </mat-form-field>
+
+       <mat-form-field [title]="title" *ngIf="!control" [ngClass]="inputClass" [ngStyle]="inputStyle"
+              class="regular-mat-form-field">
+              <mat-label *ngIf="!showLabel&&inputType!='number'">{{title}}</mat-label>
+              <input matInput [(ngModel)]="selectedValue" [placeholder]="placeholder"
+                     (change)="emitSelectedValueChange(selectedValue)" [type]="inputType">
+       </mat-form-field>
+</div>

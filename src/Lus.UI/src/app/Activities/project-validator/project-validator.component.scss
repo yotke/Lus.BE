@@ -1,0 +1,71 @@
+.project-validator{
+    position: absolute;
+    right: 10rem;
+    top: 2rem;
+    z-index: 100;
+    min-height: 15vh;
+    min-width: 15vw;
+    padding: 1rem;
+    background-color: rgba(218, 218, 218, 0.646);
+    &.is-exel-step{
+        h4{
+            font-size: 1.6rem;
+        }
+        background-color: rgba(218, 218, 218, 0.805);
+        h5{
+            color: rgb(88, 0, 7); 
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        h6{
+            color: rgb(0, 21, 105);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .time-container{
+            font-weight: 600 ;  
+            color: rgb(66, 66, 66);
+        }
+        
+    }
+    h4{
+        color: rgba(147, 0, 0, 0.93);
+        font-weight: 600;
+    }
+
+    box-shadow: 
+        0px 0 1rem 0.5rem rgb(255, 113, 113),  /* First color closer to the box */
+        0px 0 1rem 1rem rgb(255, 127, 67);    /* Second color further from the box */
+ 
+    border: 0.2rem solid rgba(255, 0, 0, 0.726);
+    border-radius: 0.5rem;
+    &::before {
+        content: "";
+        position: absolute;
+        top: -10px;   /* Half the triangle's height to position it above the component */
+        left: 50%;    /* Center it horizontally */
+        transform: translateX(-50%);  /* Ensure it's perfectly centered */
+    
+        width: 0;
+        height: 0;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 15px solid #e9e9e9;  /* Color of the triangle */
+    }
+    .times-container{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        .time-project-container{
+            display: flex;
+            flex-direction: column;
+            .time-container{
+                display: flex;
+                flex-direction: row;
+                font-size: 1rem;
+                font-weight: 600;
+            }
+        }
+        
+    }
+}

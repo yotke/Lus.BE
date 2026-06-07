@@ -1,0 +1,65 @@
+.center{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    // justify-content: center;                      
+}
+
+.history-container{
+    display: flex;
+    flex-direction: column;
+    .projects-table-container{
+        padding: 1rem;
+        .project-container{
+            display: flex;
+            flex-direction: column;    
+            font-size: 1rem;
+            font-weight: 600;
+            .project-headlines-container{
+                display: flex;
+                flex-direction: column;
+                .row-headline-container{
+            
+                    display: flex;
+                    &.first-row,.last-row{
+                        // border-top:0.1rem solid rgb(52, 56, 113);
+                       .text-content{
+                        border-top:0.1rem solid rgb(201 201 201);
+                        border-bottom:0.1rem solid rgb(201 201 201);
+                        border-left:0.1rem solid rgba(255, 255, 255, 0.464);
+                        color: #619bff;
+                        background-color: rgba(215, 215, 215, 0.35);
+                    
+                       }
+                       &.active{
+                        .text-content{
+                            background-color: rgb(129 249 255 / 35%);
+                        }
+                    }
+                    }
+                    color: #868686;
+                    // border-right:0.1rem solid rgb(52, 56, 113);
+                    // border-left:0.1rem solid rgb(52, 56, 113);
+                    .text-content{
+                        padding: 1rem;
+                        font-size: 1.1rem;
+                        b{
+                            font-size: 1.3rem;
+                        }
+                        // border-radius: 0.2rem;
+                       
+                        &.open-btn{
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-right:0.1rem solid  rgb(201 201 201);
+                        }
+                    }
+                }
+
+            
+            
+            }
+        }
+    }
+}

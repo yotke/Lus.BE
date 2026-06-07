@@ -1,0 +1,15 @@
+.text-content{
+    padding: 1rem;
+    font-size: 1.1rem;
+    b{
+        font-size: 1.3rem;
+    }
+    // border-radius: 0.2rem;
+   
+    &.open-btn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right:0.1rem solid  rgb(201 201 201);
+    }
+}

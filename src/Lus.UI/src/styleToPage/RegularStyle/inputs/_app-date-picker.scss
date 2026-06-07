@@ -1,0 +1,19 @@
+app-date-picker {
+
+    width: 100%;
+
+    .date-container {
+
+        width: 100%;
+    }
+}
+.date-mat-form-field{
+    width: 100%;
+    padding: 0 !important;
+      display: flex;
+    &.padding-zero{
+  .mat-mdc-form-field-infix {
+        padding: 0 !important;
+      }
+    }
+}

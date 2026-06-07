@@ -1,0 +1,32 @@
+<section class="history-container">
+    <section class="inputs-container row">
+
+    </section>
+    <section class="projects-table-container row">
+        <h1>{{isMonthly?'רשימת הפרויקטים בחודש זה':'היסטורית פרויקטים'}}</h1>
+        <div class="project-container row col-md-12" *ngFor="let project of projectList;let i=index">
+            <div class="project-headlines-container">
+                <div class="row-headline-container first-row row col-md-12" [ngClass]="{active: expandData&&i==idx}">
+                    <div class="text-content open-btn col-md-1">
+                        <app-add-btn (click)="openTab(i)" *ngIf="!(expandData&&i==idx)"></app-add-btn>
+                        <app-minus-btn (click)="closeTab()" *ngIf="expandData&&i==idx"></app-minus-btn>
+                    </div>
+                    <div class="text-content col-md-3">
+                        <b>תאריך עבודה:</b>
+                        {{changeCurrDate(project.CurrentDate)}}
+                    </div>
+                    <div class="text-content col-md-3">
+                        <b>שם הפרויקט:</b>
+                        {{project.Name}}
+                    </div>
+                    <div class="text-content col-md-3">
+                        <b>שם מחלקה:</b>
+                        {{project.SectionName}}
+                    </div>
+                </div>
+                <app-project-row *ngIf="expandData&&i==idx" [project]="project"></app-project-row>
+
+            </div>
+        </div>
+    </section>
+</section>

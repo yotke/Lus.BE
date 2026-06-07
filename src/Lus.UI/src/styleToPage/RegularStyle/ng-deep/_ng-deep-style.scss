@@ -1,0 +1,108 @@
+// .tik-oved-style{
+    @import '../variables.scss';
+
+    * {
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    
+    /// TABLE HANDLE 
+    .mat-mdc-table .mat-mdc-header-row,
+    .mdc-data-table__header-row {
+      min-height: 2.5rem !important;
+    }
+    
+    .mat-mdc-table .mat-mdc-row,
+    .mdc-data-table__row {
+      min-height: 2.5rem !important;
+      height: 2.5rem !important;
+    }
+    
+    mat-label {
+      margin-right: 1rem;
+      padding: 1rem;
+      min-width: $base-size-label*10;
+      // overflow: hidden;
+    }
+    
+    .mdc-line-ripple {
+      display: none !important;
+      /* Hides the default line ripple */
+    }
+    
+    
+    ////// INPUT ON SELECT OUTLINE
+    .mat-mdc-form-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      border: 0.1rem solid transparent;
+      box-shadow: none;
+    }
+    
+    
+    .mat-mdc-form-field .mdc-text-field--filled.mdc-text-field--focused {
+      border: 0.1rem solid #5c8eec !important;
+      box-shadow: inset 0 0.5rem 0.5rem rgba(92, 103, 255, 0.2) !important;
+    }
+    
+    /* For invalid state */
+    .mat-mdc-form-field.mat-form-field-invalid .mdc-text-field--filled {
+      border: 0.1rem solid red !important;
+      box-shadow: inset 0 0.5rem 0.5rem rgba(255, 0, 0, 0.2) !important;
+    }
+    
+    
+    //GENERIC MAT CHECK BOX
+    
+    
+    
+    .not-clickable {
+      .mat-mdc-checkbox {
+        pointer-events: none !important;
+        cursor: none !important;
+      }
+    }
+    
+    .mat-mdc-radio-checked .mdc-form-field.mat-internal-form-field {
+      background-color: rgb(0 144 212) !important;
+    }
+    
+    .mat-mdc-checkbox .mdc-checkbox__background {
+      background: #ffffff !important;
+      border-color: #A8A9AC !important;
+      box-sizing: content-box;
+    }
+    
+    .mat-mdc-checkbox .mdc-checkbox__checkmark-path {
+      stroke: #01A8D4 !important;
+      font-size: 5rem !important;
+      font-weight: bold !important;
+    }
+    
+    ///GENERAL TO INPUT
+    
+    .mat-mdc-form-field-subscript-wrapper,
+    .mat-mdc-form-field-bottom-align::before {
+      display: none;
+    }
+    
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+      border: 0.1rem solid #cdcecc !important;
+      border-radius: 0;
+      background-color: #fff !important;
+    }
+    
+    .mat-mdc-form-field-flex {
+      justify-content: center;
+      align-items: center !important;
+      height: 2.3rem;
+      display: flex;
+    }
+    
+    ///// NG SELECT
+    
+    .ng-select-container {
+      border: 0.1rem solid #cdcecc !important;
+      background-color: #fff !important;
+      border-radius: 0 !important;
+      min-width: $base-size-input*13.8;
+      min-height: 2.5rem !important;
+      font-size: 1rem;
+    }

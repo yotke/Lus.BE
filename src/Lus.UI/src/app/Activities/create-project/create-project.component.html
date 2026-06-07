@@ -1,0 +1,115 @@
+<section class="create-project-container">
+    <app-return-btn (click)="returnFromComponent()"></app-return-btn>
+    <form [formGroup]="CreateProjectForm" (ngSubmit)="onFormSubmit()">
+        <section class="inputs-project-container">
+            <app-main-headline [title]="'יצירת פרויקט'"></app-main-headline>
+            <div class="row">
+                <div class="inputs-headline-container">
+                    <h3>כותרת הפרויקט</h3>
+                </div>
+                <div class="col-md-4" style="align-items: center;display: flex;">
+                    <app-month-picker [formGroup]="CreateProjectForm" [formControlName]="'CurrentDate'"
+                        [placeholder]="'תאריך חודש נוכחי'" [classes]="'padding-zero'"></app-month-picker>
+                </div>
+
+                <div class="col-md-4">
+                    <app-regular-input [title]="'שם הפרויקט'" [formGroup]="CreateProjectForm"
+                        [placeholder]="'שם הפרויקט המלא'" [formControlName]="'Name'"></app-regular-input>
+                </div>
+                <div class="col-md-4">
+                    <app-regular-input [title]="'שם מחלקה'" [formGroup]="CreateProjectForm" [placeholder]="'שם מחלקה'"
+                        [formControlName]="'SectionName'"></app-regular-input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <app-regular-input [title]="'שם יזם וסוג תעודה'" [formGroup]="CreateProjectForm"
+                        [placeholder]="'שם יזם וסוג תעודה'" [formControlName]="'ConstrctorTitle'"></app-regular-input>
+                </div>
+                <div class="col-md-3">
+                    <app-regular-input [title]="'כתובת משרד היזם'" [formGroup]="CreateProjectForm"
+                        [placeholder]="'כתובת משרד היזם'" [formControlName]="'ConstrctorAddress'"></app-regular-input>
+                </div>
+                <div class="col-md-3">
+                    <app-regular-input [title]="'מספר היזם'" [formGroup]="CreateProjectForm" [placeholder]="'מספר היזם'"
+                        [formControlName]="'ConstrctorPhone'"></app-regular-input>
+                </div>
+                <div class="col-md-3">
+                    <app-regular-input [title]="'מספר עוסק מורשה'" [formGroup]="CreateProjectForm"
+                        [placeholder]="'מספר עוסק מורשה'"
+                        [formControlName]="'ConstrctorEntrepreneurNumber'"></app-regular-input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row col-md-4"></div>
+                <div class="col-md-4">
+                    <app-regular-input [title]="'מנהל הפרויקט'" [formGroup]="CreateProjectForm"
+                        [formControlName]="'ProjectManager'" [placeholder]="'מנהל הפרויקט'"></app-regular-input>
+                    <div class="row col-md-4"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="row col-md-6">
+                    <div class="inputs-headline-container">
+                        <h3>נתוני הפרויקט</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <app-regular-input [title]="'מקום הפרויקט'" [formGroup]="CreateProjectForm"
+                            [formControlName]="'ProjectLocation'" [placeholder]="'שם מקום העבודה'"></app-regular-input>
+                    </div>
+                    <div class="col-md-12">
+                        <app-regular-input [title]="'המתכנן'" [formGroup]="CreateProjectForm"
+                            [formControlName]="'ConstrctorName'" [placeholder]="'שם המתכנן'"></app-regular-input>
+                    </div>
+                    <div class="col-md-12">
+                        <app-regular-input [title]="'מספר חוזה'" [formGroup]="CreateProjectForm"
+                            [placeholder]="'מספר חוזה'" [formControlName]="'WorkContractNumber'"></app-regular-input>
+                    </div>
+                    <div class="col-md-12">
+                        <app-date-picker [formGroup]="CreateProjectForm" [title]="'תאריך תחילת חוזה'"
+                            [formControlName]="'StartContractDate'"
+                            [placeholder]="'תאריך תחילת חוזה'"></app-date-picker>
+                    </div>
+                    <div class="col-md-12">
+                        <app-date-picker [formGroup]="CreateProjectForm" [title]="'תאריך סוף חוזה'"
+                            [formControlName]="'EndContractDate'" [placeholder]="'תאריך סוף חוזה'"></app-date-picker>
+                    </div>
+                </div>
+                <div class="row col-md-6">
+                    <div class="inputs-headline-container">
+                        <h3>נתוני עובד</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <app-regular-input [title]="'מספר חשבון'" [formGroup]="CreateProjectForm"
+                            [formControlName]="'AccountNumber'" [placeholder]="'מספר חשבון'"></app-regular-input>
+                    </div>
+                    <div class="col-md-12">
+                        <app-regular-input [title]="'נושא הפרויקט'" [formGroup]="CreateProjectForm"
+                            [placeholder]="'נושא הפרויקט'" [formControlName]="'ProjectSubject'"></app-regular-input>
+                    </div>
+                    <div class="col-md-12">
+                        <app-regular-input [title]="'שם העובד'" [formGroup]="CreateProjectForm"
+                            [placeholder]="'שם העובד'" [formControlName]="'WorkerName'"></app-regular-input>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="col-md-6">
+                            <app-regular-input [title]="'סוג תעריף'" [formGroup]="CreateProjectForm"
+                                [placeholder]="'סוג תעריף'" [formControlName]="'WorkKindRate'"></app-regular-input>
+                        </div>
+                        <div class="col-md-6">
+                            <app-regular-input [title]="'רמת תעריף'" [formGroup]="CreateProjectForm"
+                                [placeholder]="'רמת תעריף'" [formControlName]="'WorkRate'"></app-regular-input>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <app-regular-input [title]="'היחידה המעסיקה'" [formGroup]="CreateProjectForm"
+                            [placeholder]="'היחידה המעסיקה'"
+                            [formControlName]="'EmployeeSectionName'"></app-regular-input>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <app-submit-btn matStepperNext *ngIf="!CurrProject" [btnTitle]="'צור פרויקט'"></app-submit-btn>
+        <app-submit-btn matStepperNext *ngIf="CurrProject" [btnTitle]="'עדכן נתוני פרויקט'"></app-submit-btn>
+    </form>
+</section>

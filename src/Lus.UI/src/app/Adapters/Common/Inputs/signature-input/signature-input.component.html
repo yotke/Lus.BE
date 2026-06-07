@@ -1,0 +1,19 @@
+<div class="signature-container" (blur)="onTouchedEvent()">
+    <div class="signature-title-container">
+        <h1 class="signature-title">{{ title }}</h1>
+    </div>
+    <canvas class="signature-content" #canvas></canvas>
+    <div class="outer-buttons-block">
+        <div class="inner-button-sign">
+            <button mat-raised-button color="primary" [disabled]="!sigPad || sigPad.isEmpty()"
+                (click)="clearSignature()" class="step-btn">
+                נקה חתימה
+            </button>
+        </div>
+        <!-- <div class="inner-button-sign">
+            <button mat-raised-button color="primary" (click)="saveSignature()" class="step-btn">
+                שלח חתימה
+            </button>
+        </div> -->
+    </div>
+</div>

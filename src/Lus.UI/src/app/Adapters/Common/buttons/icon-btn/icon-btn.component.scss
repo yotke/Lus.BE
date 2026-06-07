@@ -1,0 +1,36 @@
+.btn-icon-container {
+    direction: rtl;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon-btn {
+    display: flex;
+    padding: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    background-color: inherit;
+    color: #6f6f6f;
+    border: 0.1rem solid #6f6f6f8b;
+    border-radius: 0.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  
+    &:active {
+      transform: translateY(2px);
+      box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+    }
+  
+    &:hover {
+      color: white;
+      background-color: rgb(98, 98, 255);
+      box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.2);
+    }
+  
+    mat-icon {
+      font-size: 24px;
+    }
+  }
+  

@@ -1,0 +1,46 @@
+<div class="filter-container">
+    <!-- Text Filter -->
+    <div class="filter-group">
+      <label for="textFilter">Name Filter:</label>
+      <input 
+        id="textFilter" 
+        type="text" 
+        [value]="textFilter" 
+        (input)="onTextFilterChange($event.target.value)" 
+        placeholder="Type to filter by name..." />
+    </div>
+  
+    <!-- Status Filter -->
+    <div class="filter-group">
+      <label for="statusFilter">Status:</label>
+      <select 
+        id="statusFilter" 
+        [value]="statusFilter" 
+        (change)="onStatusChange($event.target.value)">
+        <option value="all">All</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+        <option value="pending">Pending</option>
+      </select>
+    </div>
+  
+    <!-- Date Range Filter -->
+    <div class="filter-group">
+      <label for="startDate">Start Date:</label>
+      <input 
+        id="startDate" 
+        type="date" 
+        (change)="onStartDateChange($event.target.value)" />
+    </div>
+    <div class="filter-group">
+      <label for="endDate">End Date:</label>
+      <input 
+        id="endDate"
+        type="date"
+        (change)="onEndDateChange($event.target.value)" />
+    </div>
+  
+    <!-- Clear All Filters -->
+    <button class="clear-btn" (click)="clearAllFilters()">Clear Filters</button>
+  </div>
+  

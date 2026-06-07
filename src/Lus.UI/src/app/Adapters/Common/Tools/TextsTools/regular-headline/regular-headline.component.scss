@@ -1,0 +1,29 @@
+:host {
+    display: block;
+    width: 100%;
+
+    &.regular .mat-toolbar {
+        width: 100%;
+    }
+}
+
+.mat-toolbar {
+    display: flex;
+    justify-content: center; // Center the title horizontally
+    position: relative; // Ensure the content can be positioned correctly
+
+    h1 {
+        flex-grow: 1;
+        text-align: start;
+    }
+
+    [left-content] {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+
+

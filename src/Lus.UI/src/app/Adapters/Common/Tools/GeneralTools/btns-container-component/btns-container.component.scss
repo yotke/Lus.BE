@@ -1,0 +1,10 @@
+.btns-container {
+    display: flex;
+    /* Use flexbox for layout */
+    gap: 0.5rem;
+    margin: 0.3rem;
+    flex-wrap: wrap;
+    /* Add some spacing between buttons */
+    justify-content: flex-start;
+    /* Align items to the start (left) */
+}

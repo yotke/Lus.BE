@@ -1,0 +1,19 @@
+<nav aria-label="filtering-pagination">
+  <mat-icon [matMenuTriggerFor]="menuNameCommon" #mouseOutMenuTrigger="matMenuTrigger" (menuOpened)="menuOpened()" (menuClosed)="menuClosed()">sort</mat-icon>
+  <mat-menu #menuNameCommon="matMenu" [hasBackdrop]="false">
+    <div (mouseleave)="closeOnMouseOut()" class="filtering-pagination">
+      <button mat-menu-item (click)="sortingByColumn()"><mat-icon>{{reverseSorting ? 'arrow_upward' : 'arrow_downward'}}</mat-icon> מיון </button>
+      <form class="filter-form" *ngIf="isFilterShow">
+        <mat-form-field>
+          <mat-label> סינון</mat-label>
+          <input #filters matInput (click)="$event.stopPropagation();" (keyup)="filterValue(filters.value)" />
+          <button type="button" *ngIf="filters.value" matSuffix mat-icon-button
+                  aria-label="Clear"
+                  (click)="filters.value = ''; clearFilters()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </div>
+  </mat-menu>
+</nav>

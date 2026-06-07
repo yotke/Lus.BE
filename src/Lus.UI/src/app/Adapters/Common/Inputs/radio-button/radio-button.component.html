@@ -1,0 +1,27 @@
+<div class="radio-btn-container">
+    <!-- Optional label -->
+    <mat-label *ngIf="showLabel">{{ title }}</mat-label>
+    <mat-radio-group *ngIf="control" [class]="'radio-btn-group-input'+' '+class" [name]="'radio_'+title+'_' + uniqueId"
+        [formControl]="control" [title]="title">
+        <mat-label *ngIf="!showLabel">{{ title }}</mat-label>
+        <div class=" reg-input radio-btn-input-container">
+            <mat-radio-button [disabled]="disabled" [value]="true" class="mat-radio-button-input">{{radioName1}}
+            </mat-radio-button>
+            <mat-radio-button [disabled]="disabled" [value]="false" class="mat-radio-button-input">{{radioName2}}
+            </mat-radio-button>
+        </div>
+    </mat-radio-group>
+
+    <mat-radio-group *ngIf="!control" [class]="'radio-btn-group-input'+' '+class" [title]="title"
+        [(ngModel)]="selectedValue" [name]="'radio_'+title+'_' + uniqueId" (ngModelChange)="onInputChange($event)">
+        <mat-label *ngIf="!showLabel">{{ title }}</mat-label>
+        <div class=" reg-input radio-btn-input-container">
+            <mat-radio-button [disabled]="disabled" [value]="true"
+                class="mat-radio-button-input positive">{{radioName1}}
+            </mat-radio-button>
+            <mat-radio-button [disabled]="disabled" [value]="false"
+                class="mat-radio-button-input negative">{{radioName2}}
+            </mat-radio-button>
+        </div>
+    </mat-radio-group>
+</div>
