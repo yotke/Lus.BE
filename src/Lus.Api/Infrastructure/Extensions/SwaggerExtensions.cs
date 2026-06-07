@@ -6,44 +6,30 @@ namespace Lus.Infrastructure.Extensions
     {
         public static IServiceCollection AddSwaggerConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lus API", Version = "v1" });
 
-                var requiredScope = configuration.GetValue<string>("Services:Identity:ApiScope");
-                var securityDefinitionId = "oath2ClientCredentials";
-
+                // Cookie-based auth: the SPA logs in via POST /api/auth/login and the browser
+                // sends the auth cookie automatically. A Bearer definition is still exposed for
+                // service-to-service callers that use the BasicAuthentication scheme.
+                const string securityDefinitionId = "bearer";
                 var securityScheme = new OpenApiSecurityScheme
                 {
                     Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = securityDefinitionId },
-                    Type = SecuritySchemeType.OAuth2,
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
                     Scheme = "bearer",
                     BearerFormat = "JWT",
-                    Flows = new OpenApiOAuthFlows
-                    {
-                        ClientCredentials = new OpenApiOAuthFlow
-                        {
-                            TokenUrl = new Uri($"{configuration.GetValue<string>("Services:Identity:ExternalUrl")}/connect/token"),
-                            Scopes = new Dictionary<string, string>
-                            {
-                                { requiredScope, "For accessing the API at all" }
-                            }
-                        },
-                        Password = new OpenApiOAuthFlow()
-                        {
-                            TokenUrl = new Uri($"{configuration.GetValue<string>("Services:Identity:ExternalUrl")}/connect/token"),
-                            Scopes = new Dictionary<string, string>
-                            {
-                                { requiredScope, "For accessing the API at all" }
-                            }
-                        }
-                    }
+                    Description = "Service-to-service Bearer token (optional). The first-party UI uses cookies."
                 };
 
                 c.AddSecurityDefinition(securityDefinitionId, securityScheme);
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
-                    {securityScheme, new string[] { requiredScope }}
+                    { securityScheme, Array.Empty<string>() }
                 });
             });
 

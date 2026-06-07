@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Lus.Authorization.Authentication;
 
 namespace Lus.Infrastructure.SignalRHubs
 {
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = CookieAuthSchemes.Api)]
     public class CitiesStreetsHub : Hub
     {
         private readonly IMediator mediator;

@@ -2,10 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 using Lus.Application;
 using Lus.Application.Common.Services;
 using Lus.Application.Users;
@@ -16,7 +14,6 @@ using Lus.Authorization.Csrf;
 using Lus.Infrastructure.ErrorHandlers;
 using Lus.Infrastructure.Extensions;
 using Lus.Infrastructure.IdentityServer;
-using Lus.Infrastructure.IdentityServer.GrantValidators;
 using Lus.Infrastructure.Services;
 using Lus.NotificationCenter.Extensions;
 using Serilog;
@@ -42,26 +39,6 @@ namespace Lus
                 .AddAutoMapper(typeof(Startup), typeof(UserMappingProfile))
                 .AddMediatR(typeof(CreateUserCommandHandler), typeof(Startup));
 
-            services.AddIdentityServer(options =>
-            {
-                options.IssuerUri = "sso";
-                options.Authentication.CookieAuthenticationScheme = CookieAuthSchemes.IdentityServer;
-
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseSuccessEvents = true;
-            })
-                .AddSignInCertificates(Configuration)
-                .AddInMemoryIdentityResources(IdentityServerConfiguration.GetIdentityResources())
-                .AddInMemoryApiResources(IdentityServerConfiguration.GetApiResources(Configuration))
-                .AddInMemoryApiScopes(IdentityServerConfiguration.GetApiScopes(Configuration))
-                .AddProfileService<CustomProfileService>()
-                .AddEndpoint<TokenWithAuthFactorEndpoint>("TokenWithAuthFactorEndpoint", "/connect/tokenAuth")
-                .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidator>()
-                .AddCustomClientStoreCache()
-                .AddExtensionGrantValidator<ConfirmTokenGrantTypeValidator>()
-                .AddExtensionGrantValidator<LogInWithoutPasswordGrantTypeValidator>();
 
             services.AddDatabaseContext(Configuration);
 
@@ -96,7 +73,8 @@ namespace Lus
                 .AddSwaggerConfiguration(Configuration)
                 .AddSecurityConfiguration(Configuration)
                 .AddOptionsConfiguration(Configuration)
-                .AddRepositories();
+                .AddRepositories()
+                .AddRetrievers();
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
@@ -142,9 +120,6 @@ namespace Lus
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lus API V1");
-                c.OAuthClientId(Configuration.GetValue<string>("Services:Identity:ClientId"));
-                c.OAuthClientSecret(Configuration.GetValue<string>("Services:Identity:ClientSecret"));
-                c.OAuthUseBasicAuthenticationWithAccessCodeGrant();
             });
 
             
@@ -173,7 +148,6 @@ namespace Lus
             {
                 endpoints.WithSwaggerRedirection(Configuration);
                 endpoints.MapDefaultControllerRoute();
-                endpoints.MapTwoFactorAuthRedirection();
                 endpoints.MapSignalRHubs();
                 endpoints.MapHealthChecks("/health"); // Adds the health check endpoint
             });
@@ -183,7 +157,6 @@ namespace Lus
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.UseIdentityServer();
             app.ApplyMigrations(Configuration);
 
             Seed(app);
@@ -199,16 +172,9 @@ namespace Lus
             })
                 .AddPolicyScheme(CookieAuthSchemes.Smart, CookieAuthSchemes.Smart, options =>
                 {
-                    options.ForwardDefaultSelector = context =>
-                    {
-                        var authHeader = context.Request.Headers["Authorization"].ToString();
-                        if (authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-                        {
-                            return JwtBearerDefaults.AuthenticationScheme;
-                        }
-
-                        return CookieAuthSchemes.Api;
-                    };
+                    // First-party SPA uses cookies; service-to-service callers send a Basic/Bearer
+                    // header and explicitly opt into the BasicAuthentication scheme on their endpoints.
+                    options.ForwardDefaultSelector = _ => CookieAuthSchemes.Api;
                 })
                 .AddCookie(CookieAuthSchemes.IdentityServer, options =>
                 {
@@ -227,32 +193,6 @@ namespace Lus
                         OnRedirectToAccessDenied = context =>
                         {
                             context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                            return Task.CompletedTask;
-                        }
-                    };
-                })
-                .AddJwtBearer(options =>
-                {
-                    options.Authority = Configuration.GetValue<string>("Services:Identity:ExternalUrl");
-                    options.RequireHttpsMetadata = Configuration.GetValue<bool>("General:RequireHttpsMetadata");
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidAudiences = new[]
-                        {
-                            Configuration.GetValue<string>("Services:Identity:Audience"),
-                            ApplicationConstants.ResourceApiNames.Platform,
-                            ApplicationConstants.ResourceApiNames.Public
-                        }
-                    };
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            var accessToken = context.Request.Query["access_token"];
-                            if (!string.IsNullOrEmpty(accessToken))
-                            {
-                                context.Token = accessToken;
-                            }
                             return Task.CompletedTask;
                         }
                     };

@@ -46,12 +46,6 @@ namespace Lus.Infrastructure.Extensions
         }
 
 
-        public static void MapTwoFactorAuthRedirection(this IEndpointRouteBuilder endpoints) =>
-            endpoints.MapPost("connect/token", context =>
-            {
-                context.Response.Redirect("/connect/tokenAuth", true, true);
-                return Task.CompletedTask;
-            });
 
         public static void MapSignalRHubs(this IEndpointRouteBuilder endpoints)
         {

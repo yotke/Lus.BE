@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TableColumn } from '../../../../../Infastructure/Classes/interfaces/ITableColumn/itable-columns';
-import { EntityBaseFieldsDictionary } from '../../../../../Infastructure/Classes/ClassesColumnsDictionaries/EntityBase/entityBaseColumnsDirctionary';
+import { TableColumn } from '../../../../../Infrastructure/Classes & Models/Interfaces/ITableColumn/itable-columns';
+import { EntityBaseFieldsDictionary } from '../../../../../Infrastructure/Classes & Models/ClassesColumnsDictionaries/EntityBase/entityBaseColumnsDirctionary';
 
 @Injectable({
   providedIn: 'root'

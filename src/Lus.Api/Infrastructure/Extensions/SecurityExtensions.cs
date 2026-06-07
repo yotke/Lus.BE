@@ -36,9 +36,11 @@ namespace Lus.Infrastructure.Extensions
 
             services.AddAuthorization(configOptions =>
             {
+                // Cookie-authenticated first-party users are trusted once authenticated.
+                // Scope claims are still attached to the principal at login time so the
+                // scope-based named policies below keep working for service callers.
                 configOptions.DefaultPolicy = new AuthorizationPolicyBuilder()
                     .RequireAuthenticatedUser()
-                    .RequireClaim("scope", ApplicationConstants.Scopes.InternalApi)
                     .Build();
 
                 configOptions.AddPolicy(ApplicationConstants.AuthPolicies.ReadWriteData, policy => policy

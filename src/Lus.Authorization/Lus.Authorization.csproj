@@ -8,11 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+        <!-- JwtBearer is NOT part of the Microsoft.AspNetCore.App shared framework; it must be
+             referenced explicitly. It also brings System.IdentityModel.Tokens.Jwt transitively. -->
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
         <PackageReference Include="EasyCaching.Core" Version="1.9.0" />
         <PackageReference Include="IdentityModel" Version="6.1.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 

@@ -65,6 +65,22 @@ export class AuthService {
     return this.doLogIn(tokenResult);
   }
 
+  // Cookie-based password login. Posts credentials to the API which sets the
+  // session cookies (lus_sid / lus_xsrf), then hydrates the local auth state.
+  loginWithPassword(email: string, password: string): Observable<any> {
+    return this.http
+      .post<any>(`${environment.target}/api/auth/login`, { Email: email, Password: password }, { withCredentials: true })
+      .pipe(
+        tap(response => {
+          const isSuccess = response?.isSuccess ?? response?.IsSuccess;
+          if (isSuccess) {
+            const user = response?.user ?? response?.User ?? {};
+            this.doLogIn(user).subscribe();
+          }
+        })
+      );
+  }
+
   doLogout() {
     return this.logout().toPromise();
   }

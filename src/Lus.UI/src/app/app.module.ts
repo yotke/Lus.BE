@@ -28,6 +28,7 @@ import { ProjectValidatorComponent } from './Activities/project-validator/projec
 import { HistoryProjectsComponent } from './Activities/history-projects/history-projects.component';
 import { ProjectRowComponent } from './Activities/history-projects/project-row/project-row.component';
 import { ProjectTextRowComponent } from './Activities/history-projects/project-text-row/project-text-row.component';
+import { LoginComponent } from './Activities/login/login.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonHelpersModule } from './Adapters/Common/common-helpers.module';
@@ -56,6 +57,7 @@ declare var $: any;
     HistoryProjectsComponent,
     ProjectRowComponent,
     ProjectTextRowComponent,
+    LoginComponent,
 
   ],
   imports: [

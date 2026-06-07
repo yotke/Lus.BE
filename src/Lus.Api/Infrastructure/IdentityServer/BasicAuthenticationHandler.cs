@@ -21,8 +21,8 @@ namespace Lus.Infrastructure.IdentityServer
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
-            ISystemClock clock, IUsersService usersService) :
-            base(options, logger, encoder, clock)
+            IUsersService usersService) :
+            base(options, logger, encoder)
         {
             this.usersService = usersService;
         }

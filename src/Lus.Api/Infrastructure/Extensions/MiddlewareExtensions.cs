@@ -32,10 +32,17 @@ namespace Lus.Infrastructure.Extensions
 
         private static string GetIP(this HttpContext context)
         {
-            var clientIp = context?.GetServerVariable("HTTP_X_FORWARDED_FOR");
+            var clientIp = context?.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (!string.IsNullOrEmpty(clientIp))
+            {
+                // X-Forwarded-For may contain a comma-separated list; take the first (original client).
+                clientIp = clientIp.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .FirstOrDefault();
+            }
+
             if (string.IsNullOrEmpty(clientIp))
             {
-                clientIp = context?.GetServerVariable("REMOTE_ADDR");
+                clientIp = context?.Connection?.RemoteIpAddress?.ToString();
             }
 
             if (string.IsNullOrEmpty(clientIp))

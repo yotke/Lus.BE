@@ -49,9 +49,19 @@ namespace Lus.Application.Users.Commands.AddUserLoginInfo
 
         private string GetIPAddresses()
         {
-            string clientIp = this.httpContextAccessor.HttpContext?.GetServerVariable("HTTP_X_FORWARDED_FOR");
+            var httpContext = this.httpContextAccessor.HttpContext;
+
+            var clientIp = httpContext?.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (!string.IsNullOrEmpty(clientIp))
+            {
+                clientIp = clientIp.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .FirstOrDefault();
+            }
+
             if (string.IsNullOrEmpty(clientIp))
-                clientIp = this.httpContextAccessor.HttpContext?.GetServerVariable("REMOTE_ADDR");
+            {
+                clientIp = httpContext?.Connection?.RemoteIpAddress?.ToString();
+            }
 
             if (string.IsNullOrEmpty(clientIp))
             {

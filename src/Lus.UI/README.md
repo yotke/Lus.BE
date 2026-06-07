@@ -1,27 +1,57 @@
-# LozInformation
+# Lus.UI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.1.
+Angular front-end for the **Lus / Shiftiz** platform (deployed under `shiftiz.com`).
 
-## Development server
+- Angular 18 (NgModule `AppModule` bootstrap)
+- Cookie-based authentication (HttpOnly session cookie + double-submit CSRF token)
+- Generic, reusable table / input / button adapter library
+- Server-side **search & projection** engine bindings
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Quick start
 
-## Code scaffolding
+```bash
+npm install
+npm start            # ng serve on http://localhost:4200
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The dev server talks to the backend defined in
+`src/environments/environment.ts` (`target`).
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+npm run build        # production build into dist/loz-information
+```
 
-## Running unit tests
+## Docker
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Multi-stage Docker build (Node build stage + nginx runtime):
 
-## Running end-to-end tests
+```bash
+docker build -t lus-ui .
+docker run -p 4200:80 lus-ui
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Or run the full stack (MySQL + API + UI) from the solution root:
 
-## Further help
+```bash
+cd ..                # /Users/.../Lus/src
+docker compose up --build
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+See `docs/DOCKER.md` for the `shiftiz.com` domain setup.
+
+## Documentation
+
+| Doc | Description |
+|-----|-------------|
+| docs/ARCHITECTURE.md  | App structure, adapters, infrastructure |
+| docs/AUTH.md          | Cookie + CSRF authentication flow |
+| docs/SEARCH_ENGINE.md | Search request / filtering / projection model |
+| docs/DOCKER.md        | Containerization & deployment |
+
+## Testing
+
+```bash
+npm test             # Karma + Jasmine unit tests
+```
