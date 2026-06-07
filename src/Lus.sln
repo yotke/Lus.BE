@@ -46,6 +46,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Lus.UI", "Lus.UI", "{5A1F42
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lus.NotificationCenter", "Lus.NotificationCenter\Lus.NotificationCenter.csproj", "{BA56997B-7778-4F9F-8E26-49FE19D895D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lus.Api.Tests", "Lus.Api.Tests\Lus.Api.Tests.csproj", "{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,18 @@ Global
 		{BA56997B-7778-4F9F-8E26-49FE19D895D0}.TestingServer|Any CPU.Build.0 = TestingServer|Any CPU
 		{BA56997B-7778-4F9F-8E26-49FE19D895D0}.TestingServer|x64.ActiveCfg = TestingServer|Any CPU
 		{BA56997B-7778-4F9F-8E26-49FE19D895D0}.TestingServer|x64.Build.0 = TestingServer|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.Debug|x64.Build.0 = Debug|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.Release|x64.ActiveCfg = Release|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.Release|x64.Build.0 = Release|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.TestingServer|Any CPU.ActiveCfg = Debug|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.TestingServer|Any CPU.Build.0 = Debug|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.TestingServer|x64.ActiveCfg = Debug|Any CPU
+		{2223FE33-7F98-4F95-9D7E-2BB9EEC100F6}.TestingServer|x64.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

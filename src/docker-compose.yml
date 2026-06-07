@@ -1,0 +1,39 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-Tal3054910!}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-LusManager}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD:-Tal3054910!}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lus-api:local
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
+      PORT: "8080"
+      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=${MYSQL_DATABASE:-LusManager};User=root;Password=${MYSQL_ROOT_PASSWORD:-Tal3054910!};SslMode=None;AllowPublicKeyRetrieval=true;"
+      Auth__Cookie__Domain: ""
+      Auth__Cookie__Secure: "false"
+      Cors__Origins: "http://localhost:4200,http://localhost:8080"
+    ports:
+      - "8080:8080"
+
+volumes:
+  db_data:

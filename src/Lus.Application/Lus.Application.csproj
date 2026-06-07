@@ -40,7 +40,8 @@
         <ProjectReference Include="..\Lus.NotificationCenter\Lus.NotificationCenter.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
+    <!-- Windows-only legacy reference (unused in code). Excluded on Linux/Docker builds. -->
+    <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
         <Reference Include="System.Activities">
             <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Activities.dll</HintPath>
         </Reference>

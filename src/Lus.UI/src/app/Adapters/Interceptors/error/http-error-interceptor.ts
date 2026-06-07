@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/Infrastructure/Services/Auth/auth.service';
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router, private authService: AuthService, private signinScv: SigninService) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(

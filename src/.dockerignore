@@ -1,0 +1,16 @@
+.git
+.github
+.vs
+.idea
+**/bin
+**/obj
+**/publish
+**/.angular
+**/node_modules
+**/dist
+Lus.UI
+ServiceReference
+packages
+docker-compose*.yml
+*.md
+**/*.user
