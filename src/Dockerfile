@@ -11,6 +11,7 @@ COPY Lus.Contracts/Lus.Contracts.csproj             Lus.Contracts/
 COPY Lus.Infrastructure/Lus.Infrastructure.csproj   Lus.Infrastructure/
 COPY Lus.Authorization/Lus.Authorization.csproj     Lus.Authorization/
 COPY Lus.NotificationCenter/Lus.NotificationCenter.csproj Lus.NotificationCenter/
+COPY Lus.FilterEngine/Lus.FilterEngine.csproj       Lus.FilterEngine/
 
 # restore only the API project (pulls in transitive project deps)
 RUN dotnet restore Lus.Api/Lus.Api.csproj

@@ -83,6 +83,12 @@ Thumbs.db
 *~
 
 ## ---------------------------------------------------------------------------
+## Frontend lives in its own repo (yotke/Lus.FE). It is a nested git repo at
+## src/Lus.UI and is intentionally NOT tracked by the backend (yotke/Lus.BE) repo.
+## ---------------------------------------------------------------------------
+/src/Lus.UI/
+
+## ---------------------------------------------------------------------------
 ## Secrets / local config
 ## ---------------------------------------------------------------------------
 *.pfx
