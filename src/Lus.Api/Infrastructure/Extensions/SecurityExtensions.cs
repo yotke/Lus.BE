@@ -63,15 +63,19 @@ namespace Lus.Infrastructure.Extensions
             // security
             services.AddCors(options =>
             {
-                var allowedOrigins = configuration.GetValue<string>("Cors:Origins");
+                // Credentialed CORS (cookies/auth) cannot be combined with a wildcard
+                // origin: ASP.NET Core throws at request time when AllowAnyOrigin and
+                // AllowCredentials are both set, which results in NO
+                // Access-Control-Allow-Origin header being emitted. We must echo an
+                // explicit allow-list of origins instead.
+                var allowedOrigins = (configuration.GetValue<string>("Cors:Origins") ?? string.Empty)
+                    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
                 options.AddPolicy("DefaultCorsPolicy", builder => builder
-                    .AllowAnyOrigin()
+                    .WithOrigins(allowedOrigins)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
-                    .AllowCredentials()
-                    .SetIsOriginAllowed((host) => true)
-                    .WithOrigins(allowedOrigins.Split(",")));
+                    .AllowCredentials());
             });
 
             return services;

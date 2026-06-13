@@ -123,6 +123,23 @@ namespace Lus.Infrastructure.Extensions
                 context.Users.Add(user);
                 context.SaveChanges();
             }
+            else
+            {
+                // The user already exists: guarantee it can always sign in by
+                // re-asserting a confirmed/active account with the configured
+                // password. This recovers accounts that were left unconfirmed,
+                // soft-deleted, or with a stale password.
+                user.IsConfirmed = true;
+                user.Active = true;
+                user.DeletedOn = null;
+                user.DeletedById = null;
+                user.PasswordChangedDate = now;
+                user.ClientSecrets = new List<string> { admin.Password.ToSha256() };
+                user.PasswordHash = passwordHasher.HashPassword(user, admin.Password);
+                user.UpdatedById = -1;
+                user.UpdatedOn = now;
+                context.SaveChanges();
+            }
 
             var desiredRoleNames = (admin.Roles != null && admin.Roles.Count > 0)
                 ? admin.Roles

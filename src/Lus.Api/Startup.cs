@@ -110,6 +110,16 @@ namespace Lus
             //app.UseRateLimiter();
             //app.UseIPFilter();
 
+            // Must run before routing/CORS/auth: behind Railway's TLS-terminating
+            // proxy the inbound request is plain HTTP, so we rely on the
+            // X-Forwarded-Proto/For headers to recover the real https scheme and
+            // client IP. Without this first, secure-cookie and redirect logic see
+            // the wrong scheme.
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             app.UseExceptionHandler(new ExceptionHandlerOptions
             {
                 ExceptionHandler = SystemExceptionHandler.UnhandledExceptionsHandler
@@ -150,11 +160,6 @@ namespace Lus
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapSignalRHubs();
                 endpoints.MapHealthChecks("/health"); // Adds the health check endpoint
-            });
-
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
             app.ApplyMigrations(Configuration);
