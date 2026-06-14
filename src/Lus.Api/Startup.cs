@@ -114,11 +114,17 @@ namespace Lus
             // proxy the inbound request is plain HTTP, so we rely on the
             // X-Forwarded-Proto/For headers to recover the real https scheme and
             // client IP. Without this first, secure-cookie and redirect logic see
-            // the wrong scheme.
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            // the wrong scheme (and the antiforgery SecurePolicy=Always check 500s).
+            var forwardedHeadersOptions = new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
+            };
+            // Railway's edge proxy is not on a loopback/known network, so by default
+            // its forwarded headers would be ignored. Clear the allow-lists to trust
+            // the single upstream proxy that fronts this container.
+            forwardedHeadersOptions.KnownNetworks.Clear();
+            forwardedHeadersOptions.KnownProxies.Clear();
+            app.UseForwardedHeaders(forwardedHeadersOptions);
 
             app.UseExceptionHandler(new ExceptionHandlerOptions
             {
