@@ -13438,3 +13438,4 @@ System.Net.Mail.SmtpException: Failure sending mail.
 2026-06-15 01:31:17.500 +03:00 [INF] Executed action Lus.Controllers.AuthController.Login (Lus.Api) in 82240.2434ms
 2026-06-15 01:31:17.506 +03:00 [INF] Executed endpoint 'Lus.Controllers.AuthController.Login (Lus.Api)'
 2026-06-15 01:31:17.551 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5236/api/auth/login - 499 null null 82393.5524ms
+2026-06-15 01:49:56.258 +03:00 [INF] 1 servers were removed due to timeout
