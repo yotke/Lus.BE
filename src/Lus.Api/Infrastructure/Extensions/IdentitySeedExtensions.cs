@@ -93,10 +93,17 @@ namespace Lus.Infrastructure.Extensions
 
             // IgnoreQueryFilters so a previously soft-deleted admin is still found.
             var user = context.Users.IgnoreQueryFilters().FirstOrDefault(u => u.UserName == email);
-            if (user == null)
+
+            // Purely additive: if a user with this email already exists we leave it
+            // completely untouched (no password reset, no role changes). The seeder
+            // only ever *adds* the configured admin when it is missing.
+            if (user != null)
             {
-                user = new User
-                {
+                return;
+            }
+
+            user = new User
+            {
                     UserName = email,
                     Email = email,
                     FirstName = admin.FirstName,
@@ -118,28 +125,10 @@ namespace Lus.Infrastructure.Extensions
                     CreatedOn = now,
                     UpdatedOn = now
                 };
-                user.PasswordHash = passwordHasher.HashPassword(user, admin.Password);
+            user.PasswordHash = passwordHasher.HashPassword(user, admin.Password);
 
-                context.Users.Add(user);
-                context.SaveChanges();
-            }
-            else
-            {
-                // The user already exists: guarantee it can always sign in by
-                // re-asserting a confirmed/active account with the configured
-                // password. This recovers accounts that were left unconfirmed,
-                // soft-deleted, or with a stale password.
-                user.IsConfirmed = true;
-                user.Active = true;
-                user.DeletedOn = null;
-                user.DeletedById = null;
-                user.PasswordChangedDate = now;
-                user.ClientSecrets = new List<string> { admin.Password.ToSha256() };
-                user.PasswordHash = passwordHasher.HashPassword(user, admin.Password);
-                user.UpdatedById = -1;
-                user.UpdatedOn = now;
-                context.SaveChanges();
-            }
+            context.Users.Add(user);
+            context.SaveChanges();
 
             var desiredRoleNames = (admin.Roles != null && admin.Roles.Count > 0)
                 ? admin.Roles
