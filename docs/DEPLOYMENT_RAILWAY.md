@@ -2,10 +2,10 @@
 
 ## Docker (in `src/`)
 
-- **`Dockerfile`** — multi-stage: SDK 9 build → `dotnet publish` → ASP.NET 9 runtime. Installs native libs (`libgdiplus`, `ghostscript`, `fontconfig`) needed by the PDF stack (`itext7`, `GhostScript.NetCore`, `Select.HtmlToPdf.NetCore`). Railway-aware: binds Kestrel to `$PORT` via `docker-entrypoint.sh`.
+- **`Dockerfile`** — multi-stage: SDK 9 build → `dotnet publish` → ASP.NET 9 runtime. Installs native libs (`libgdiplus`, `ghostscript`, `fontconfig`) needed by the PDF stack (`itext7`, `GhostScript.NetCore`, `Select.HtmlToPdf.NetCore`) plus `python3`/`pip` and `PythonScripts/` for the Document Builder agents. Railway-aware: binds Kestrel to `$PORT` via `docker-entrypoint.sh`.
 - **`docker-entrypoint.sh`** — `exec dotnet Lus.Api.dll --urls http://+:${PORT:-8080}`.
-- **`.dockerignore`** — excludes `bin/obj/publish`, `node_modules`, `Lus.UI`, etc.
-- **`docker-compose.yml`** — local stack: `mysql` (8.0) + `api` + `ui`.
+- **`.dockerignore`** — excludes `bin/obj/publish`, `node_modules`, `Lus.UI`, etc. Does **not** exclude `PythonScripts/`.
+- **`docker-compose.yml`** — local stack: `mysql` (8.0) + `redis` (7) + `api` (build context = repo root) + `ui`.
 
 > Note: `Lus.Application.csproj` has a legacy, unused `System.Activities` reference made **Windows-only** (`Condition="'$(OS)' == 'Windows_NT'"`) so Linux/Docker builds succeed.
 
@@ -44,4 +44,28 @@ PORT=8080
 ConnectionStrings__DefaultConnection=Server=mysql.railway.internal;Port=3306;Database=railway;User=root;Password=...;SslMode=None;AllowPublicKeyRetrieval=true;
 Auth__Cookie__Domain=.shiftiz.com
 Cors__Origins=https://shiftiz.com,https://www.shiftiz.com,https://app.shiftiz.com,https://api.shiftiz.com
+```
+
+## Redis (builder sessions + cache)
+
+The Document Builder stores live sessions in Redis (7-day TTL) with a MySQL rescue row. Add a Railway Redis plugin and inject into the API service — **never bake the password into the image**:
+
+```
+Caching__ProviderName=redis
+Redis__Host=<railway internal host>
+Redis__Port=6379
+Redis__Username=default
+Redis__Password=<from plugin>
+Redis__Ssl=false
+```
+
+Local `src/docker-compose.yml` runs `redis:7-alpine` and sets `Caching__ProviderName=redis` by default. Override with `CACHING_PROVIDER=default` to keep in-memory EasyCaching.
+
+## Python runtime
+
+The API image installs `python3` + `openpyxl` and copies `PythonScripts/` to `/app/PythonScripts`. Override if needed:
+
+```
+PythonSetting__PythonProviderPath=/usr/bin/python
+PythonSetting__PythonScriptFolder=/app/PythonScripts
 ```

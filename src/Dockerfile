@@ -31,7 +31,9 @@ RUN dotnet publish \
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 
-# itext7 / GhostScript.NetCore / Select.HtmlToPdf need these native libraries
+# itext7 / GhostScript.NetCore / Select.HtmlToPdf need these native libraries.
+# python3 is required for the Document Builder agent runtime (P0). Prefer the
+# root Dockerfile (compose context: ..) which also COPY PythonScripts/.
 RUN set -eux; \
     for i in 1 2 3; do apt-get update && break || (echo "apt-get update retry ($i)" && sleep 2); done; \
     apt-get install -y --no-install-recommends \
@@ -40,6 +42,9 @@ RUN set -eux; \
         ghostscript \
         fontconfig \
         libfontconfig1 \
+        python3 \
+        python3-pip \
+    && ln -sf /usr/bin/python3 /usr/bin/python \
     && rm -rf /var/lib/apt/lists/*
 
 # copy published .NET app

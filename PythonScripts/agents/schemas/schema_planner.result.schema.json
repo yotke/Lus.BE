@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["Columns", "Notes"],
+  "properties": {
+    "Columns": { "type": "array" },
+    "Notes": { "type": "array" }
+  },
+  "additionalProperties": false
+}

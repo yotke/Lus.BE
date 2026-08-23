@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["Ok", "Warnings", "Patches"],
+  "properties": {
+    "Ok": { "type": "boolean" },
+    "Warnings": { "type": "array" },
+    "Patches": { "type": "array" }
+  },
+  "additionalProperties": false
+}

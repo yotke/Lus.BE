@@ -16,14 +16,27 @@ services:
       timeout: 5s
       retries: 10
 
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   api:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile
     image: lus-api:local
     restart: unless-stopped
     depends_on:
       mysql:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
@@ -32,6 +45,14 @@ services:
       Auth__Cookie__Domain: ""
       Auth__Cookie__Secure: "false"
       Cors__Origins: "http://localhost:4200,http://localhost:8080"
+      Caching__ProviderName: "${CACHING_PROVIDER:-redis}"
+      Redis__Host: "${REDIS_HOST:-redis}"
+      Redis__Port: "${REDIS_PORT:-6379}"
+      Redis__Username: "${REDIS_USERNAME:-}"
+      Redis__Password: "${REDIS_PASSWORD:-}"
+      Redis__Ssl: "${REDIS_SSL:-false}"
+      PythonSetting__PythonProviderPath: /usr/bin/python
+      PythonSetting__PythonScriptFolder: /app/PythonScripts
     ports:
       - "8080:8080"
 

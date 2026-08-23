@@ -55,6 +55,12 @@ namespace Lus.Infrastructure.Extensions
                         HttpTransportType.WebSockets |
                         HttpTransportType.LongPolling;
                 });
+            endpoints.MapHub<DocumentBuilderHub>(DocumentBuilderHub.Path, options =>
+                {
+                    options.Transports =
+                        HttpTransportType.WebSockets |
+                        HttpTransportType.LongPolling;
+                });
         }
     }
 }

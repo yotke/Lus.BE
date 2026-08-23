@@ -74,7 +74,9 @@ namespace Lus
                 .AddSecurityConfiguration(Configuration)
                 .AddOptionsConfiguration(Configuration)
                 .AddRepositories()
-                .AddRetrievers();
+                .AddRetrievers()
+                .AddPythonScriptsAdapter(Configuration)
+                .AddDocumentBuilder();
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>

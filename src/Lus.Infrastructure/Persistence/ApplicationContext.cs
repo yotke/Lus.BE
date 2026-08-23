@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Lus.Application.Contacts.Entities;
+using Lus.Application.Documents.Entities;
 using Lus.Application.HtmlTemplates.Entities;
 using Lus.Application.Images.Entities;
 using Lus.Application.Notifications.Entities;
@@ -35,6 +36,13 @@ namespace Lus.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new UserOrganizationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new UserLoginInfoEntityTypeConfiguration());
 
+            modelBuilder.ApplyConfiguration(new DocumentSeriesEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DocumentTemplateEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DocumentInstanceEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DocumentDayEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DocumentRowEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new DocumentBuildSessionRowEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new RateCardEntityTypeConfiguration());
 
             AddQueryFilters(modelBuilder);
         }
@@ -76,6 +84,14 @@ namespace Lus.Infrastructure.Persistence
         public DbSet<AppliedUserTender> AppliedUserTenders { get; set; }
 
         public DbSet<UserLoginInfo> UserLoginInfos { get; set; }
+
+        public DbSet<DocumentSeries> DocumentSeries { get; set; }
+        public DbSet<DocumentTemplate> DocumentTemplates { get; set; }
+        public DbSet<DocumentInstance> DocumentInstances { get; set; }
+        public DbSet<DocumentDay> DocumentDays { get; set; }
+        public DbSet<DocumentRow> DocumentRows { get; set; }
+        public DbSet<DocumentBuildSessionRow> DocumentBuildSessions { get; set; }
+        public DbSet<RateCard> RateCards { get; set; }
 
         private void AddQueryFilters(ModelBuilder modelBuilder)
             => modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsDeleted);

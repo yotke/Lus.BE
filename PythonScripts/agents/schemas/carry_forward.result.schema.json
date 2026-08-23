@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["SheetName", "Patches"],
+  "properties": {
+    "SheetName": { "type": "string" },
+    "CarryInFromInstanceId": {},
+    "Patches": { "type": "array" }
+  },
+  "additionalProperties": false
+}

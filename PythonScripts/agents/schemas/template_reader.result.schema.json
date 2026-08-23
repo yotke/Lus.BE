@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "SheetName",
+    "Rtl",
+    "ColumnWidths",
+    "MergeCount",
+    "MergePolicy",
+    "DataBandStartRow",
+    "TableHeaderRow",
+    "TitleRow",
+    "TotalsRow",
+    "BillingStartRow",
+    "DeclarationStartRow",
+    "Letterhead",
+    "FiveBlocks",
+    "Patches"
+  ],
+  "properties": {
+    "SheetName": { "type": "string" },
+    "Rtl": { "type": "boolean" },
+    "ColumnWidths": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "MergeCount": { "type": "integer", "minimum": 0 },
+    "MergePolicy": { "type": "string" },
+    "DataBandStartRow": { "type": "integer", "minimum": 1 },
+    "TableHeaderRow": { "type": "integer", "minimum": 1 },
+    "TitleRow": { "type": "integer", "minimum": 1 },
+    "TotalsRow": { "type": "integer", "minimum": 1 },
+    "BillingStartRow": { "type": "integer", "minimum": 1 },
+    "DeclarationStartRow": { "type": "integer", "minimum": 1 },
+    "Letterhead": { "type": "object" },
+    "FiveBlocks": { "type": "object" },
+    "Patches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["Op", "Path"],
+        "properties": {
+          "Op": { "type": "string" },
+          "Path": { "type": "string" },
+          "Value": {}
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

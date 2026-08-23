@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["Patches", "Totals"],
+  "properties": {
+    "Patches": { "type": "array" },
+    "Totals": { "type": "object" }
+  },
+  "additionalProperties": false
+}

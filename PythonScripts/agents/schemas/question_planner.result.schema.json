@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["Question"],
+  "properties": {
+    "Question": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["Id", "Text", "Chips"],
+          "properties": {
+            "Id": { "type": "string" },
+            "Text": { "type": "string" },
+            "Chips": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

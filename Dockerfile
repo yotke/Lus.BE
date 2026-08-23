@@ -2,7 +2,7 @@
 # Root Dockerfile for Railway (build context = repo root).
 # The .NET solution lives under src/. This lets Railway auto-detect the build
 # at the repository root with NO "Root Directory" setting required.
-# (src/Dockerfile still exists for docker-compose, which uses context: ./src)
+# (src/docker-compose.yml builds this file with context: .. ; src/Dockerfile remains for src-context builds)
 ###############################################################################
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
@@ -40,11 +40,26 @@ RUN set -eux; \
         ghostscript \
         fontconfig \
         libfontconfig1 \
+        python3 \
+        python3-pip \
+    && ln -sf /usr/bin/python3 /usr/bin/python \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /publish .
+COPY PythonScripts/ /app/PythonScripts/
+RUN if [ -f /app/PythonScripts/requirements.txt ]; then \
+      pip install --no-cache-dir --break-system-packages -r /app/PythonScripts/requirements.txt; \
+    fi
 
 ENV ASPNETCORE_ENVIRONMENT=Production
+ENV PythonSetting__PythonProviderPath=/usr/bin/python
+ENV PythonSetting__PythonScriptFolder=/app/PythonScripts
+ENV Caching__ProviderName=default
+ENV Redis__Host=""
+ENV Redis__Port="6379"
+ENV Redis__Username=""
+ENV Redis__Password=""
+ENV Redis__Ssl="false"
 EXPOSE 8080
 
 # Railway provides $PORT; bind Kestrel to it.
