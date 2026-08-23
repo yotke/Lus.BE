@@ -62,8 +62,15 @@ namespace Lus.Application.Documents.Builder.Services
         {
             var next = Clone(draft);
             var discarded = new List<DraftPatchOp>();
-            foreach (var op in inverse)
-                ApplyOne(next, op, discarded);
+
+            // REVERSE order. Inverses are recorded as the forward batch is applied, so each
+            // one restores the state its own op saw. Replaying them forwards undoes the
+            // earliest change first and the later inverses then write back state that already
+            // contains the change being undone — e.g. setting the rate emits [rate -> null,
+            // totals -> {rate: 225}], which forwards leaves the rate at 225.
+            for (var i = inverse.Count - 1; i >= 0; i--)
+                ApplyOne(next, inverse[i], discarded);
+
             next.Version = Math.Max(0, draft.Version - 1);
             return next;
         }
@@ -359,10 +366,16 @@ namespace Lus.Application.Documents.Builder.Services
             if (patch.Subject is not null) target.Subject = patch.Subject;
         }
 
+        /// <summary>
+        /// 1-based, Sunday = 1 — matching the document's own day letters (א'=ראשון) and the
+        /// canvas that renders them. .NET's DayOfWeek is 0-based, so writing it straight
+        /// through made Sunday render blank and every other day show the previous day's
+        /// letter.
+        /// </summary>
         private static void DeriveDayOfWeek(DocumentDraftRowDto row)
         {
             if (row.Date is { } date)
-                row.DayOfWeek = (int)date.DayOfWeek;
+                row.DayOfWeek = (int)date.DayOfWeek + 1;
         }
 
         private static int ParseRowIndex(string path)

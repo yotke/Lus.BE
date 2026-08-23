@@ -32,7 +32,36 @@ namespace Lus.Application.Documents.Builder.Services
         private static readonly Dictionary<string, string> TextFields = new(StringComparer.OrdinalIgnoreCase)
         {
             ["account_number"] = "accountNumber",
+            ["client_name"] = "template.clientName",
+            ["planner_name"] = "template.plannerName",
         };
+
+        /// <summary>
+        /// Row-scoped questions ("which date is row 3?") arrive as `row_date:3`. The row index
+        /// travels in the id because the planner picked the row — asking the user to restate
+        /// which row they are answering about would be asking them to do the app's bookkeeping.
+        /// </summary>
+        private static readonly Dictionary<string, (string Field, bool Numeric)> RowFields =
+            new(StringComparer.OrdinalIgnoreCase)
+            {
+                ["row_date"] = ("Date", false),
+                ["row_hours"] = ("Hours", true),
+                ["row_location"] = ("Location", false),
+                ["row_subject"] = ("Subject", false),
+            };
+
+        private static (string Kind, int Index)? SplitRowQuestion(string questionId)
+        {
+            var separator = questionId.IndexOf(':');
+            if (separator <= 0) return null;
+
+            var kind = questionId[..separator];
+            if (!RowFields.ContainsKey(kind)) return null;
+
+            return int.TryParse(questionId[(separator + 1)..], out var index) && index >= 0
+                ? (kind, index)
+                : null;
+        }
 
         /// <summary>
         /// True when this question's answer is a field value rather than free text. Questions
@@ -41,7 +70,9 @@ namespace Lus.Application.Documents.Builder.Services
         /// </summary>
         public static bool IsBindable(string? questionId) =>
             !string.IsNullOrWhiteSpace(questionId)
-            && (NumericFields.ContainsKey(questionId!) || TextFields.ContainsKey(questionId!));
+            && (NumericFields.ContainsKey(questionId!)
+                || TextFields.ContainsKey(questionId!)
+                || SplitRowQuestion(questionId!) is not null);
 
         /// <summary>
         /// Turns an answer into a patch, or null when the answer cannot be read as one — an
@@ -65,6 +96,29 @@ namespace Lus.Application.Documents.Builder.Services
                 };
             }
 
+            if (SplitRowQuestion(questionId!) is { } row)
+            {
+                var (field, numeric) = RowFields[row.Kind];
+                object? value = numeric ? ParseNumber(answer!) : answer!.Trim();
+                if (value is null) return null;
+
+                // A date answer only counts if it IS a date — "מחר" must fall through to a
+                // normal turn rather than being written as a literal string.
+                if (field == "Date")
+                {
+                    if (!TryParseDate(answer!, out var parsed)) return null;
+                    value = parsed;
+                }
+
+                var patch = new Dictionary<string, object?> { [field] = value };
+                return new DraftPatchOp
+                {
+                    Op = "UpdateRow",
+                    Path = $"rows[{row.Index}]",
+                    Value = JsonSerializer.SerializeToElement(patch, Json)
+                };
+            }
+
             if (TextFields.TryGetValue(questionId!, out var textPath))
             {
                 return new DraftPatchOp
@@ -76,6 +130,25 @@ namespace Lus.Application.Documents.Builder.Services
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Accepts what a person actually types for a date: 5/3/2026, 5.3.2026, 2026-03-05.
+        /// Day-first, because that is how the exemplar's users write dates.
+        /// </summary>
+        private static bool TryParseDate(string answer, out DateTime value)
+        {
+            var trimmed = answer.Trim();
+            string[] formats =
+            {
+                "yyyy-MM-dd", "d/M/yyyy", "dd/MM/yyyy", "d.M.yyyy", "dd.MM.yyyy",
+                "d-M-yyyy", "dd-MM-yyyy", "d/M/yy", "dd/MM/yy",
+            };
+
+            return DateTime.TryParseExact(
+                       trimmed, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out value)
+                   || DateTime.TryParse(
+                       trimmed, CultureInfo.GetCultureInfo("he-IL"), DateTimeStyles.None, out value);
         }
 
         /// <summary>

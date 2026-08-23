@@ -217,33 +217,13 @@ namespace Lus.Application.Documents.Builder.Orchestration
                 GuardEditablePath(op);
 
             var batch = PatchAuthorStamp.Stamp(ops, PatchAuthorStamp.User);
-            // Totals are derived, never typed: recompute them from the edited rows so a hand
-            // edit and an agent edit leave the document in the same state.
-            var preview = DraftPatcher.Preview(session.Draft, batch);
-            var totals = DocumentTotalsCalculator.Diff(preview);
-            if (totals is not null)
-                batch.Add(totals);
 
-            var (next, inverse) = DraftPatcher.Apply(session.Draft, version, batch);
-            session.Draft = next;
-            session.UndoForwards.Add(batch);
-            session.UndoInverses.Add(inverse.ToList());
-            session.RedoForwards.Clear();
-            session.RedoInverses.Clear();
-            await this.sessions.SaveAsync(session, ct);
-
-            var userKey = userId.ToString();
-            try
-            {
-                await this.events.SendDraftPatchedAsync(
-                    $"doc-{userId}", userKey, sessionId: userKey, next.Version, batch, ct);
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogWarning(ex, "DraftPatched SignalR send failed — canvas edit still committed.");
-            }
-
-            return new DocumentBuilderTurnResult { Version = next.Version, Ops = batch, Draft = next };
+            // A hand edit finishes exactly like a dictated turn: validate, derive the totals,
+            // commit under the version guard, then ask the next question. Filling a cell can
+            // close the gap the planner was asking about — or open a new one — so the
+            // interview has to move with the canvas instead of only with the chat.
+            var inputJson = System.Text.Json.JsonSerializer.Serialize(new { Text = "" });
+            return await FinishTurnAsync(session, version, $"doc-{userId}", userId.ToString(), batch, inputJson, ct);
         }
 
         /// <summary>

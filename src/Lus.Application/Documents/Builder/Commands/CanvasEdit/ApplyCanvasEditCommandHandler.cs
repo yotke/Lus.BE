@@ -28,6 +28,11 @@ namespace Lus.Application.Documents.Builder.Commands.CanvasEdit
             {
                 Version = result.Version,
                 Ops = result.Ops.ToList(),
+                // A canvas edit runs the same interview a turn does, so it answers with the
+                // same shape: the next question, any advice, and the validator's findings.
+                Question = result.Question,
+                Messages = result.Messages.ToList(),
+                Warnings = result.Warnings.ToList(),
             };
         }
     }

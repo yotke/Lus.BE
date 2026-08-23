@@ -10,6 +10,9 @@ from openpyxl import load_workbook
 from agents.doc._workbook_scan import (
     cell_text,
     column_widths,
+    scan_billing,
+    scan_month_content,
+    scan_totals_row,
     find_billing_start,
     find_declaration_start,
     find_table_header_row,
@@ -29,6 +32,99 @@ def _resolve_path(agent_input: dict) -> str | None:
         if agent_input.get(key):
             return str(agent_input[key])
     return None
+
+
+def _learn_from_history(wb, names, current_sheet):
+    """
+    Read the user's OWN past months, not just the sheet we are templating.
+
+    A workbook handed over is a year of decisions: the sites they visit, how they word a
+    task, what they charge, how long a visit runs. Learning those turns the interview from
+    generic prompts into the user's own vocabulary, and gives the billing questions answers
+    grounded in what they actually billed — instead of the invented defaults that were
+    hard-coded into the planner.
+    """
+    locations: list[str] = []
+    subjects: list[str] = []
+    hours: list[float] = []
+    rates: list[float] = []
+    vat_percent = None
+    last_remaining = None
+    day_totals: list[float] = []
+
+    for name in names:
+        try:
+            sheet = wb[name]
+            header = find_table_header_row(sheet)
+            if header is None:
+                continue
+            totals = find_totals_row(sheet, header + 1)
+            if totals is None:
+                continue
+
+            content = scan_month_content(sheet, header, totals)
+            for location in content["locations"]:
+                if location not in locations:
+                    locations.append(location)
+            subjects.extend(content["subjects"])
+            hours.extend(content["hours"])
+
+            # Hours grouped by the date they hang under: the exemplar writes the date once
+            # and leaves it blank for the following segments of the same day.
+            current_day = 0.0
+            for r in range(header + 1, totals):
+                if sheet.cell(r, 1).value is not None:
+                    if current_day:
+                        day_totals.append(current_day)
+                    current_day = 0.0
+                value = sheet.cell(r, 3).value
+                if isinstance(value, (int, float)) and not isinstance(value, bool):
+                    current_day += float(value)
+            if current_day:
+                day_totals.append(current_day)
+
+            billing_start = find_billing_start(sheet, totals)
+            declaration_start = find_declaration_start(sheet, billing_start or totals + 3)
+            if billing_start:
+                billing = scan_billing(sheet, billing_start, declaration_start or billing_start + 6)
+                if billing.get("rate"):
+                    rates.append(billing["rate"])
+                if billing.get("vat_percent") and vat_percent is None:
+                    vat_percent = billing["vat_percent"]
+
+            # The most recent month that is not the one being templated carries the balance
+            # this document should start from (the exemplar's 810 -> 760 -> 728 chain).
+            if name != current_sheet:
+                band = scan_totals_row(sheet, totals)
+                if band.get("remaining") is not None:
+                    last_remaining = band["remaining"]
+        except Exception:
+            # One unreadable sheet must never cost the whole import.
+            continue
+
+    # Subjects repeat across months; the ones that repeat are the ones worth suggesting.
+    counts: dict[str, int] = {}
+    for subject in subjects:
+        key = subject.strip()
+        if key:
+            counts[key] = counts.get(key, 0) + 1
+    common_subjects = [s for s, _ in sorted(counts.items(), key=lambda kv: -kv[1])[:8]]
+
+    positive_hours = [h for h in hours if h > 0]
+
+    return {
+        "Locations": locations[:8],
+        "Subjects": common_subjects,
+        "Rates": sorted({round(r, 2) for r in rates}, reverse=True)[:4],
+        "VatPercent": vat_percent,
+        "LastRemaining": last_remaining,
+        # Plausibility bounds, learned rather than invented: a value outside the range this
+        # user has ever billed is worth questioning (a 115-hour row is a typo, not a day).
+        "MinHours": min(positive_hours) if positive_hours else None,
+        "MaxHours": max(positive_hours) if positive_hours else None,
+        "MaxHoursPerDay": max(day_totals) if day_totals else None,
+        "MonthsSeen": len(names),
+    }
 
 
 def run(*, draft, agent_input, lang="he"):
@@ -83,6 +179,18 @@ def run(*, draft, agent_input, lang="he"):
 
         declaration_text = cell_text(ws.cell(declaration_start, 1).value)
 
+        # What the workbook TEACHES, beyond where its cells are.
+        #
+        # Read from a data_only handle: the totals band is formulas (=SUM(C11:C24),
+        # =+'previous month'!E31), and a formula-valued workbook hands back the formula
+        # TEXT, so the carried-in balance would come back empty. data_only=True returns the
+        # values Excel last calculated.
+        values_wb = load_workbook(path, data_only=True, read_only=False)
+        try:
+            learned = _learn_from_history(values_wb, names, sheet_name)
+        finally:
+            values_wb.close()
+
         five_blocks = {
             "title": t_row,
             "letterhead": max(5, t_row + 1),
@@ -130,6 +238,7 @@ def run(*, draft, agent_input, lang="he"):
                 {"Op": "SetField", "Path": "template.clientName", "Value": letterhead.get("client")},
                 {"Op": "SetField", "Path": "template.billingLabels", "Value": billing_labels},
                 {"Op": "SetField", "Path": "template.declarationText", "Value": declaration_text},
+                {"Op": "SetField", "Path": "template.learned", "Value": learned},
             ]
             + (
                 [{"Op": "SetField", "Path": "accountNumber", "Value": letterhead["account_number"]}]

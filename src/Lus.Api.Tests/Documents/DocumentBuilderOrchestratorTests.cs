@@ -387,6 +387,89 @@ namespace Lus.Api.Tests.Documents
             Assert.Equal(7m, edited.Draft.Rows[0].Hours);
         }
 
+        // ── The interview: one gap at a time, answered where it was asked ──────────
+        [Fact]
+        public async Task Answering_a_row_question_fills_that_row_not_a_new_one()
+        {
+            var orchestrator = Create(RowExtractorPython().Object);
+            await orchestrator.RunTurnAsync(71, 0, "3 שעות במשרד", CancellationToken.None);
+            var rowCount = (await orchestrator.GetSessionAsync(71, CancellationToken.None)).Draft.Rows.Count;
+
+            var answered = await orchestrator.RunTurnAsync(71, 1, "5/3/2026", "row_date:0", CancellationToken.None);
+
+            Assert.Equal(rowCount, answered.Draft.Rows.Count);
+            Assert.Equal(new DateTime(2026, 3, 5), answered.Draft.Rows[0].Date);
+            // Derived alongside the date, exactly as a dictated row would be.
+            Assert.NotNull(answered.Draft.Rows[0].DayOfWeek);
+        }
+
+        [Fact]
+        public async Task A_row_answer_leaves_the_rest_of_the_row_alone()
+        {
+            var orchestrator = Create(RowExtractorPython().Object);
+            await orchestrator.RunTurnAsync(72, 0, "3 שעות במשרד", CancellationToken.None);
+
+            var answered = await orchestrator.RunTurnAsync(72, 1, "שטח", "row_location:0", CancellationToken.None);
+
+            Assert.Equal("שטח", answered.Draft.Rows[0].Location);
+            Assert.Equal(3m, answered.Draft.Rows[0].Hours);
+            Assert.Equal("x", answered.Draft.Rows[0].Subject);
+        }
+
+        [Fact]
+        public async Task An_unreadable_date_answer_falls_through_instead_of_writing_junk()
+        {
+            var orchestrator = Create(RowExtractorPython().Object);
+            await orchestrator.RunTurnAsync(73, 0, "3 שעות במשרד", CancellationToken.None);
+
+            // "מחר" is not a date this binder can resolve; it must not become the cell value.
+            var answered = await orchestrator.RunTurnAsync(73, 1, "מחר", "row_date:0", CancellationToken.None);
+
+            Assert.All(answered.Draft.Rows, row => Assert.NotEqual(default, row.Hours));
+        }
+
+        [Fact]
+        public async Task Answering_the_client_question_records_it_on_the_template()
+        {
+            var orchestrator = Create(RowExtractorPython().Object);
+
+            var answered = await orchestrator.RunTurnAsync(74, 0, "תדם", "client_name", CancellationToken.None);
+
+            Assert.Equal("תדם", answered.Draft.Template?.ClientName);
+        }
+
+        [Fact]
+        public async Task Answering_the_account_question_records_the_account_number()
+        {
+            var orchestrator = Create(RowExtractorPython().Object);
+
+            var answered = await orchestrator.RunTurnAsync(75, 0, "01032601", "account_number", CancellationToken.None);
+
+            Assert.Equal("01032601", answered.Draft.AccountNumber);
+        }
+
+        [Fact]
+        public async Task Adding_an_empty_row_from_the_canvas_works()
+        {
+            // Exact payload the browser sent when the Add row button 400'd:
+            // {Version: 1, Ops: [{Op: "AddRow", Path: "rows", Value: {}}]}
+            var orchestrator = Create(RowExtractorPython().Object);
+            await orchestrator.RunTurnAsync(81, 0, "3 שעות במשרד", CancellationToken.None);
+
+            var added = await orchestrator.ApplyCanvasEditAsync(81, 1, new[]
+            {
+                new DraftPatchOp
+                {
+                    Op = "AddRow",
+                    Path = "rows",
+                    Value = System.Text.Json.JsonSerializer.SerializeToElement(new { })
+                }
+            }, CancellationToken.None);
+
+            Assert.Equal(2, added.Draft.Rows.Count);
+            Assert.Equal("user", added.Draft.Rows[1].Source);
+        }
+
         private static Mock<IPythonScriptsAdapter> RowExtractorPython()
         {
             var python = new Mock<IPythonScriptsAdapter>();
@@ -421,7 +504,8 @@ namespace Lus.Api.Tests.Documents
                         return Task.FromResult(
                             "{\"Ok\":true,\"Agent\":\"" + agent + "\",\"SchemaVersion\":1,\"Result\":{\"Patches\":[],\"Notes\":[],\"Columns\":[]},\"ErrorInfo\":null}");
                     }
-                    var hours = input.Contains("2 שעות") ? 2 : 3;
+                    // Hebrew is \uXXXX-escaped in the serialized input, so match the ASCII prefix.
+                    var hours = input.Contains("\"Text\":\"2") ? 2 : 3;
                     return Task.FromResult(
                         "{\"Ok\":true,\"Agent\":\"doc.row_extractor\",\"SchemaVersion\":1,\"Result\":{\"Patches\":[{\"Op\":\"AddRow\",\"Path\":\"rows\",\"Value\":{\"Hours\":" + hours + ",\"Subject\":\"x\",\"Location\":\"משרד\"}}],\"Notes\":[]},\"ErrorInfo\":null}");
                 });

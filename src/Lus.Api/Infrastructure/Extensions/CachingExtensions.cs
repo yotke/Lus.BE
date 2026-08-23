@@ -1,4 +1,5 @@
 ﻿using EasyCaching.Core.Configurations;
+using Lus.Application.Common.Services;
 using Newtonsoft.Json;
 
 namespace Lus.Infrastructure.Extensions
@@ -11,8 +12,12 @@ namespace Lus.Infrastructure.Extensions
 
             services.AddEasyCaching(options =>
             {
+                // Builder sessions carry System.Text.Json JsonElements in their undo history;
+                // plain Newtonsoft turns those into ValueKind.Undefined on the way back, and
+                // the next write throws. CacheSerializerSettings adds the converter that keeps
+                // them intact (see SessionRoundTripTests).
                 options.WithJson(
-                    jsonSerializerSettingsConfigure: json => json.ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    jsonSerializerSettingsConfigure: json => CacheSerializerSettings.Apply(json),
                     "json");
 
                 // Always register as "default" so existing IEasyCachingProvider
@@ -33,11 +38,24 @@ namespace Lus.Infrastructure.Extensions
                         if (!string.IsNullOrWhiteSpace(password))
                             config.DBConfig.Password = password;
                         config.DBConfig.IsSsl = ssl;
+                        // Bind the provider to OUR serializer explicitly. Leaving it implicit
+                        // means whichever serializer happens to be registered wins, and the
+                        // JsonElement converter is not optional — without it a round-tripped
+                        // session throws on its next write.
+                        config.SerializerName = "json";
                     }, "default");
                 }
                 else
                 {
-                    options.UseInMemory("default");
+                    options.UseInMemory(config =>
+                    {
+                        // Deep-clone-on-read round-trips the value through a serializer, which
+                        // is the same JsonElement hazard as Redis. Drafts are already cloned
+                        // explicitly by DraftPatcher before mutation, so the extra copy buys
+                        // nothing and costs correctness.
+                        config.DBConfig.EnableReadDeepClone = false;
+                        config.DBConfig.EnableWriteDeepClone = false;
+                    }, "default");
                 }
             });
 

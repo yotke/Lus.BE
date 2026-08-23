@@ -21,7 +21,7 @@ namespace Lus.Api.Tests.Documents
             Assert.Equal(1, v1.Version);
             Assert.Single(v1.Rows);
             Assert.Equal("התייעצות", v1.Rows[0].Subject);
-            Assert.Equal((int)DayOfWeek.Thursday, v1.Rows[0].DayOfWeek);
+            Assert.Equal((int)DayOfWeek.Thursday + 1, v1.Rows[0].DayOfWeek);
 
             var update = Op("UpdateRow", "rows[0].hours", new DocumentDraftRowDto { Hours = 4 });
             var (v2, _) = DraftPatcher.Apply(v1, 1, new[] { update });
@@ -61,7 +61,7 @@ namespace Lus.Api.Tests.Documents
                 Subject = "x"
             });
             var (next, _) = DraftPatcher.Apply(draft, 0, new[] { op });
-            Assert.Equal((int)DayOfWeek.Thursday, next.Rows[0].DayOfWeek);
+            Assert.Equal((int)DayOfWeek.Thursday + 1, next.Rows[0].DayOfWeek);
         }
 
         private static DraftPatchOp Op(string op, string path, object value) => new()

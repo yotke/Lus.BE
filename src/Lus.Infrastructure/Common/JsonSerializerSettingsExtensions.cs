@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Lus.Application.Common.Services;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -29,6 +30,11 @@ namespace Lus.Infrastructure.Common
             {
                 NamingStrategy = new OriginalCaseNamingStrategy()
             };
+
+            // Request bodies are parsed by Newtonsoft (AddNewtonsoftJson). Types that carry a
+            // System.Text.Json JsonElement — DraftPatchOp.Value — cannot survive that without
+            // this converter: Newtonsoft yields ValueKind.Undefined and the first read throws.
+            settings.Converters.Add(new JsonElementNewtonsoftConverter());
         }
     }
 }

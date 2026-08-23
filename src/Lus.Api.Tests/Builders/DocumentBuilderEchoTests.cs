@@ -30,7 +30,8 @@ namespace Lus.Api.Tests.Builders
         {
             var python = new FakePython();
             var controller = new Lus.Controllers.DocumentBuilderController(
-                python, MockMediator(), new DocumentBuilderAgentCatalog());
+                python, MockMediator(), new DocumentBuilderAgentCatalog(),
+                Microsoft.Extensions.Logging.Abstractions.NullLogger<Lus.Controllers.DocumentBuilderController>.Instance);
 
             var result = await controller.Echo(
                 new EchoRequestDto { Text = "שלום" },

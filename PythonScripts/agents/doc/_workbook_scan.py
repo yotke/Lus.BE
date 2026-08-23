@@ -141,3 +141,88 @@ def title_row(ws) -> int | None:
         if "דוח ביצוע שעות" in t:
             return r
     return None
+
+
+# ── Learning from the exemplar's CONTENT, not just its geometry ────────────────────
+# A workbook the user hands over is a year of their own decisions: which sites they
+# work at, how they word a task, what they charge, how many hours a visit runs. Reading
+# that turns the interview from generic prompts into their own vocabulary, and gives the
+# billing questions answers grounded in what they actually billed last month.
+
+
+def _numeric(value: Any) -> float | None:
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    return None
+
+
+def scan_month_content(ws, header_row: int, totals_row: int) -> dict[str, Any]:
+    """Locations, subjects and hour values from one month's data band."""
+    locations: list[str] = []
+    subjects: list[str] = []
+    hours: list[float] = []
+
+    for r in range(header_row + 1, totals_row):
+        hours_value = _numeric(ws.cell(r, 3).value)
+        if hours_value is not None:
+            hours.append(hours_value)
+
+        location = cell_text(ws.cell(r, 4).value)
+        if location and location not in locations:
+            locations.append(location)
+
+        subject = cell_text(ws.cell(r, 5).value)
+        if subject:
+            subjects.append(subject)
+
+    return {"locations": locations, "subjects": subjects, "hours": hours}
+
+
+def scan_billing(ws, billing_start: int, declaration_start: int) -> dict[str, Any]:
+    """
+    The money block: the rate the user charges and the VAT they apply.
+
+    Label and value are read as a pair, scanning the row for the first number, because the
+    block migrates between columns across the exemplar's own sheets (column C in the oldest
+    sheet, column D in every later one) — hard-coding a column is how the formulas got lost
+    in the first place.
+    """
+    out: dict[str, Any] = {}
+
+    for r in range(billing_start, declaration_start):
+        label = cell_text(ws.cell(r, 1).value)
+        if not label:
+            continue
+
+        value = None
+        for c in range(2, 9):
+            value = _numeric(ws.cell(r, c).value)
+            if value is not None:
+                break
+
+        if "מחיר לשעת" in label and value:
+            out["rate"] = value
+        elif 'מע"מ' in label or "מעמ" in label:
+            # The percentage usually lives in the LABEL ("מע\"מ 18%"), not the cell.
+            match = re.search(r"(\d+(?:\.\d+)?)\s*%", label)
+            if match:
+                out["vat_percent"] = float(match.group(1))
+
+    return out
+
+
+def scan_totals_row(ws, totals_row: int) -> dict[str, Any]:
+    """Hours / carried-in / remaining from a month's totals band."""
+    out: dict[str, Any] = {}
+    hours = _numeric(ws.cell(totals_row, 3).value)
+    carry_in = _numeric(ws.cell(totals_row, 4).value)
+    remaining = _numeric(ws.cell(totals_row, 5).value)
+    if hours is not None:
+        out["hours"] = hours
+    if carry_in is not None:
+        out["carry_in"] = carry_in
+    if remaining is not None:
+        out["remaining"] = remaining
+    return out

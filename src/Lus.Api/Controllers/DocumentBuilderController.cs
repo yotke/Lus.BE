@@ -45,15 +45,18 @@ namespace Lus.Controllers
         private readonly IPythonScriptsAdapter python;
         private readonly IMediator mediator;
         private readonly IBuilderAgentCatalog catalog;
+        private readonly ILogger<DocumentBuilderController> logger;
 
         public DocumentBuilderController(
             IPythonScriptsAdapter python,
             IMediator mediator,
-            IBuilderAgentCatalog catalog)
+            IBuilderAgentCatalog catalog,
+            ILogger<DocumentBuilderController> logger)
         {
             this.python = python;
             this.mediator = mediator;
             this.catalog = catalog;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -106,8 +109,13 @@ namespace Lus.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                // Derived cells (totals) rejected by the orchestrator's guard.
-                return BadRequest(new { Error = ex.Message });
+                // Derived cells (totals) rejected by the orchestrator's guard — but this also
+                // catches anything else that throws InvalidOperationException deeper in the
+                // stack, where the framework's default message says nothing useful. Log the
+                // real exception so a report of "400, operation is not valid" is diagnosable.
+                this.logger.LogError(ex, "Canvas edit failed. Ops: {Ops}",
+                    string.Join(", ", body.Ops.Select(o => $"{o.Op} {o.Path}")));
+                return BadRequest(new { Error = ex.Message, Type = ex.GetType().Name });
             }
         }
 
